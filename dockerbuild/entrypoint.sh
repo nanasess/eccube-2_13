@@ -1,8 +1,8 @@
 #!/bin/bash
 
+sed -i “s/#listen_addresses = ‘localhost’/listen_addresses = ‘*’/” /etc/postgresql/11/main/postgresql.conf
 service postgresql start
-su - postgres -c "createuser -s eccube_db_user"
-su - postgres -c "psql -c \"ALTER USER eccube_db_user WITH PASSWORD 'password';\""
-su - postgres -c "createdb -U eccube_db_user eccube_db"
+su - postgres -c "psql -c \"ALTER USER postgres WITH PASSWORD 'password';\""
+su - postgres -c "createdb eccube_db"
 
 init_container.sh
