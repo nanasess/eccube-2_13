@@ -14,19 +14,21 @@ RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc \
 RUN apt-get update && apt-get install -y postgresql \
     && rm -rf /var/lib/apt/lists/*
 
-RUN rm -Rf /home/site/*
-COPY . /home/site
+COPY dockerbuild/nginx.conf /etc/nginx/nginx.conf
+
+RUN rm -Rf /home/site/wwwroot
+COPY . /home/site/wwwroot
 RUN rm -rf .git
-RUN chown -R www-data:www-data /home/site
+RUN chown -R www-data:www-data /home/site/wwwroot
 
 RUN curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/bin/composer
 USER www-data
 
-WORKDIR /home/site
+WORKDIR /home/site/wwwroot
 RUN composer install --no-dev -o --apcu-autoloader
 
-WORKDIR /home/site/html
-VOLUME ["/home/site/html"]
+WORKDIR /home/site/wwwroot
+VOLUME ["/home/site/wwwroot"]
 USER root
 
 COPY dockerbuild/entrypoint.sh /usr/local/bin/
