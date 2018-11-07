@@ -22,7 +22,7 @@ RUN chown -R www-data:www-data /home/site
 RUN curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/bin/composer
 USER www-data
 
-WORKDIR /home/site/html
+WORKDIR /home/site
 RUN composer install --no-dev -o --apcu-autoloader
 
 WORKDIR /home/site/html
