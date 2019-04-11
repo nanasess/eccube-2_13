@@ -4,6 +4,8 @@
 # Set build version format here instead of in the admin panel.
 version: 2.17-dev-{build}
 
+image: Visual Studio 2017
+
 clone_folder: C:\projects\eccube2
 
 cache:
