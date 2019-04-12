@@ -73,10 +73,10 @@ class Common_TestCase extends PHPUnit_Framework_TestCase
             $client = new \GuzzleHttp\Client(['base_url' => self::MAILCATCHER_URL]);
             $response = $client->get('/messages');
             if ($response->getStatusCode() !== 200) {
-                $this->markTestSkipped('MailCatcher is not available');
+                $this->markTestSkipped('MailCatcher is not available: '.$response->getStatusCode());
             }
         } catch (Exception $e) {
-            $this->markTestSkipped('MailCatcher is not available');
+            $this->markTestSkipped('MailCatcher is not available: '.$e->getMessage());
         }
     }
 
