@@ -1,2 +1,6 @@
-((nil . ((php-project-root . "/home/username/git-repos/eccube-2_13")
-	 (php-project-bootstrap-scripts . ((root . "tests/require.php"))))))
+((nil . ((php-project-root . git)
+	 (php-project-bootstrap-scripts . ((root . "tests/require.php")))
+	 (phpstan-executable . "/home/username/.composer/vendor/bin/phpstan")
+         (phpstan-working-dir . "/home/username/git-repos/eccube-2_13")
+         (phpstan-config-file . (root . "phpstan.neon"))
+         (phpstan-level . 7))))
