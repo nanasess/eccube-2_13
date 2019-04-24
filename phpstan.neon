@@ -1,3 +1,5 @@
 parameters:
-  level: 7
-  bootstrap: /home/username/git-repos/eccube-2_13/tests/require.php
+  level: 0
+  autoload_files:
+        - /Users/nanasess/git-repos/eccube-2_13/tests/require.php
+  bootstrap: /Users/nanasess/git-repos/eccube-2_13/tests/require.php
