@@ -69,7 +69,7 @@ before_script:
   - docker pull schickling/mailcatcher
   - docker run -d -p 1080:1080 -p 1025:1025 --name mailcatcher schickling/mailcatcher
   - chromedriver --url-base=/wd/hub &
-  - wget https://raw.github.com/Codeception/c3/2.0/c3.php
+  - wget https://raw.github.com/Codeception/c3/1.8/c3.php
   - echo "include __DIR__.'/../c3.php';" >> html/define.php
   - php data/vendor/bin/codecept build
 
