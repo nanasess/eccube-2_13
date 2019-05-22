@@ -50,7 +50,8 @@ matrix:
 
 before_script:
     ## see https://github.com/symfony/symfony/blob/e0bdc0c35e9afdb3bee8af172f90e9648c4012fc/.travis.yml#L92-L97
-  - phpenv config-rm xdebug.ini || true
+  #- phpenv config-rm xdebug.ini || true
+  - cat ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini
   - echo "opcache.enable_cli=1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
   - echo "apc.enable_cli=1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
   - composer self-update || true
