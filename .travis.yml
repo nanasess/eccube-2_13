@@ -5,12 +5,12 @@ services:
   - docker
 sudo: false
 php:
-  - 5.4
-  - 5.5
-  - 5.6
-  - 7.0
-  - 7.1
-  - 7.2
+  # - 5.4
+  # - 5.5
+  # - 5.6
+  # - 7.0
+  # - 7.1
+  # - 7.2
   - 7.3
 
 addons:
@@ -68,13 +68,15 @@ before_script:
   - docker pull schickling/mailcatcher
   - docker run -d -p 1080:1080 -p 1025:1025 --name mailcatcher schickling/mailcatcher
   - chromedriver --url-base=/wd/hub &
+  - wget https://raw.github.com/Codeception/c3/2.0/c3.php
+  - echo "include __DIR__.'/../c3.php';" >> html/define.php
   - php data/vendor/bin/codecept build
 
 script:
   - mkdir -p reports/coverage
   - if [ ! $COVERAGE ] ; then php data/vendor/bin/phpunit -c phpunit.xml.dist ; fi
   - if [ $COVERAGE ] ; then phpdbg -qrr data/vendor/bin/phpunit -c phpunit.xml.dist ; fi
-  - if [ ! $COVERAGE ] ; then php data/vendor/bin/codecept run --env chrome --steps ; fi
+  - phpdbg -qrr data/vendor/bin/codecept run --coverage --coverage-xml --env chrome --steps
 
 after_script:
   - if [ $COVERAGE ] ; then php data/vendor/bin/coveralls -v ; fi

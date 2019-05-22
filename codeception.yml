@@ -1,4 +1,12 @@
 actor: Tester
+coverage:
+  enabled: true
+  remote: true
+  include:
+    - data/*
+  exclude:
+    - data/cache/*
+    - data/Smarty/templates_c
 paths:
     tests: ctests
     log: ctests/_output

@@ -1,4 +1,6 @@
 # for php-coveralls
 # see also. https://coveralls.io
-coverage_clover: reports/coverage/coverage.xml
+coverage_clover:
+  - reports/coverage/coverage.xml
+  - ctests/_output/*.xml
 json_path: reports/coverage/coveralls-upload.json
