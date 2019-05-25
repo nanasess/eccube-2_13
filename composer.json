@@ -12,12 +12,19 @@
     },
     "config": {
         "vendor-dir": "data/vendor",
-        "platform": {
-            "php": "5.4"
-        },
         "optimize-autoloader": true,
         "sort-packages": true
     },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../mdl_sso"
+        },
+        {
+            "type": "path",
+            "url": "../mdl_loginwith_amazonpay"
+        }
+    ],
     "require-dev": {
         "captbaritone/mailcatcher-codeception-module": "1.2.1",
         "codeception/codeception": "*",
@@ -28,9 +35,12 @@
         "php": ">=5.3.9",
         "ext-gd": "*",
         "ext-mbstring": "*",
+        "amzn/amazon-pay-sdk-php": "^3.4",
         "bondas83/mdb2_driver_mysqli": "^1.5",
         "mobiledetect/mobiledetectlib": "^2.8",
         "nanasess/mdb2_driver_pgsql": "^1.5",
+        "nanasess/mdl_loginwith_amazonpay": "*@dev",
+        "nanasess/mdl_sso": "*@dev",
         "pear/archive_tar": "^1.4.3",
         "pear/mail": "*",
         "pear/pear-core-minimal": "^1.10",
