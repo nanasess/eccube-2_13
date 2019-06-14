@@ -242,11 +242,13 @@ class SC_CartSession
     }
 
     // カートへの商品追加
-    public function addProduct($product_class_id, $quantity)
+    public function addProduct($product_class_id, $quantity, $debug = false)
     {
         $objProduct = new SC_Product_Ex();
         $arrProduct = $objProduct->getProductsClass($product_class_id);
-        var_dump($arrProduct);
+        if ($debug) {
+            var_dump($arrProduct);
+        }
         $productTypeId = $arrProduct['product_type_id'];
         $find = false;
         $max = $this->getMax($productTypeId);

@@ -61,9 +61,9 @@ class SC_Helper_Purchase_cleanupSessionTest extends SC_Helper_Purchase_TestBase
     $customer = new SC_Customer();
 
     // 削除前のデータを設定
-    $cartSession->addProduct($this->product_class_id1, 5);  // product_type_id=1
+    $cartSession->addProduct($this->product_class_id1, 5, true);  // product_type_id=1
     var_dump($cartSession->cartSession);
-    $cartSession->addProduct($this->product_class_id2, 10); // product_type_id=2
+    $cartSession->addProduct($this->product_class_id2, 10, true); // product_type_id=2
     var_dump($cartSession->cartSession);
     $_SESSION['site']['uniqid'] = '100001';
 
