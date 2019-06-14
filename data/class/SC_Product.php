@@ -397,7 +397,7 @@ __EOS__;
     public function getProductsClass($productClassId)
     {
         $objQuery = SC_Query_Ex::getSingletonInstance();
-        $objQuery->setWhere('product_class_id = ? AND T1.del_flg = 0');
+        $objQuery->setWhere('product_class_id = ?');
         $arrRes = $this->getProductsClassByQuery($objQuery, $productClassId);
 
         $arrProduct = (array) $arrRes[0];
