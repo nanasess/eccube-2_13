@@ -62,7 +62,9 @@ class SC_Helper_Purchase_cleanupSessionTest extends SC_Helper_Purchase_TestBase
 
     // 削除前のデータを設定
     $cartSession->addProduct($this->product_class_id1, 5);  // product_type_id=1
+    var_dump($cartSession->cartSession);
     $cartSession->addProduct($this->product_class_id2, 10); // product_type_id=2
+    var_dump($cartSession->cartSession);
     $_SESSION['site']['uniqid'] = '100001';
 
     $helper->cleanupSession(1001, $cartSession, $customer, PRODUCT_TYPE_NORMAL);
@@ -75,8 +77,10 @@ class SC_Helper_Purchase_cleanupSessionTest extends SC_Helper_Purchase_TestBase
       'multiple_temp' => null
     );
 
+
     $this->actual['cart_max_deleted'] = $cartSession->getMax(PRODUCT_TYPE_NORMAL);
     $this->actual['cart_max_notdeleted'] = $cartSession->getMax(PRODUCT_TYPE_DOWNLOAD);
+    var_dump($cartSession->cartSession);
     $this->actual['uniqid'] = $_SESSION['site']['uniqid'];
     $this->actual['shipping'] = $_SESSION['shipping'];
     $this->actual['multiple_temp'] = $_SESSION['multiple_temp'];

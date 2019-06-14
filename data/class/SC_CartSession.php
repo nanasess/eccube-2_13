@@ -139,10 +139,6 @@ class SC_CartSession
     // カート内商品の最大要素番号を取得する。
     public function getMax($productTypeId)
     {
-        var_dump('product_type_id: '.$productTypeId);
-        var_dump('cart_session:');
-        var_dump($this->cartSession);
-        
         $max = 0;
         if (count($this->cartSession[$productTypeId]) > 0) {
             foreach ($this->cartSession[$productTypeId] as $key => $value) {
