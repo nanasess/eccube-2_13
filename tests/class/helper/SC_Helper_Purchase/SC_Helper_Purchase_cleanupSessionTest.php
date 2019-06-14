@@ -41,8 +41,10 @@ class SC_Helper_Purchase_cleanupSessionTest extends SC_Helper_Purchase_TestBase
   {
     parent::setUp();
     $product_id1 = $this->objGenerator->createProduct(null, 3, PRODUCT_TYPE_NORMAL);
+    var_dump('product_id1: '.$product_id1);
     $this->product_class_id1 = $this->objQuery->get('product_class_id', 'dtb_products_class', 'product_id = ?', [$product_id1]);
     $product_id2 = $this->objGenerator->createProduct(null, 3, PRODUCT_TYPE_DOWNLOAD);
+    var_dump('product_id2: '.$product_id2);
     $this->product_class_id2 = $this->objQuery->get('product_class_id', 'dtb_products_class', 'product_id = ?', [$product_id2]);
 
   }
@@ -64,11 +66,13 @@ class SC_Helper_Purchase_cleanupSessionTest extends SC_Helper_Purchase_TestBase
     $cartSession->addProduct($this->product_class_id1, 5, true);  // product_type_id=1
     $objProduct = new SC_Product_Ex();
     $arrProduct = $objProduct->getProductsClass($this->product_class_id1);
+    var_dump('product_class_id1: '.$this->product_class_id1);
     var_dump($cartSession->cartSession);
     var_dump($arrProduct);
     $cartSession->addProduct($this->product_class_id2, 10, true); // product_type_id=2
     $objProduct = new SC_Product_Ex();
     $arrProduct = $objProduct->getProductsClass($this->product_class_id2);
+    var_dump('product_class_id2: '.$this->product_class_id2);
     var_dump($cartSession->cartSession);
     var_dump($arrProduct);
 
