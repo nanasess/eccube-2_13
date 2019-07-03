@@ -56,7 +56,10 @@ var_dump($product_class_ids);
 if ($num < $config['fixture_order_num']) {
     echo 'Generating Orders';
     foreach ($customer_ids as $customer_id) {
-        $target_product_class_ids = array_rand($product_class_ids, $faker->numberBetween(2, count($product_class_ids) - 1));
+        $num_req = $faker->numberBetween(2, count($product_class_ids) - 1);
+        var_dump('num_req');
+        var_dump($num_req);
+        $target_product_class_ids = array_rand($product_class_ids, $num_req);
         var_dump('product_class_ids: target');
         var_dump($target_product_class_ids);
         $charge = $faker->randomNumber(4);
