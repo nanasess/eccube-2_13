@@ -492,6 +492,9 @@ class FixtureGenerator
     public function createOrderDetailAsArray($product_class_id, $order_id)
     {
         $productsClassValues = $this->objQuery->getRow('*', 'dtb_products_class', 'product_class_id = ?', [$product_class_id]);
+        if (!$productsClassValues['product_id']) {
+            var_dump($productsClassValues);
+        }
         $productsValues = $this->objQuery->getRow('*', 'dtb_products', 'product_id = ?', [$productsClassValues['product_id']]);
 
         $classcategory_name1 = $this->objQuery->get('name', 'dtb_classcategory', 'classcategory_id = ?', [$productsClassValues['classcategory_id1']]);
