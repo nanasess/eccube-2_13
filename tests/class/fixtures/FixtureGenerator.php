@@ -399,8 +399,7 @@ class FixtureGenerator
                 return $id;
             }, $c);
         }, $hierarchy));
-        var_dump('createCategories');
-        var_dump($category_ids);
+
         $result = [];
         foreach ($category_ids as $level => $ids) {
             foreach ($ids as $id) {
@@ -469,7 +468,6 @@ class FixtureGenerator
      */
     public function relateProductCategories($product_id, $category_ids = [])
     {
-        var_dump($category_ids);
         return array_map(function ($category_id) use ($product_id) {
             $rank = $this->objQuery->max('rank', 'dtb_product_categories');
             $this->objQuery->insert('dtb_product_categories', [
@@ -493,6 +491,7 @@ class FixtureGenerator
     {
         $productsClassValues = $this->objQuery->getRow('*', 'dtb_products_class', 'product_class_id = ?', [$product_class_id]);
         if (!$productsClassValues['product_id']) {
+            var_dump('product_class_id: '.$product_class_id);
             var_dump($productsClassValues);
         }
         $productsValues = $this->objQuery->getRow('*', 'dtb_products', 'product_id = ?', [$productsClassValues['product_id']]);
