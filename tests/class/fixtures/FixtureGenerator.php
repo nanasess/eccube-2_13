@@ -399,7 +399,8 @@ class FixtureGenerator
                 return $id;
             }, $c);
         }, $hierarchy));
-
+        var_dump('createCategories');
+        var_dump($category_ids);
         $result = [];
         foreach ($category_ids as $level => $ids) {
             foreach ($ids as $id) {
