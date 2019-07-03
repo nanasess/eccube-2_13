@@ -468,6 +468,7 @@ class FixtureGenerator
      */
     public function relateProductCategories($product_id, $category_ids = [])
     {
+        var_dump($category_ids);
         return array_map(function ($category_id) use ($product_id) {
             $rank = $this->objQuery->max('rank', 'dtb_product_categories');
             $this->objQuery->insert('dtb_product_categories', [
