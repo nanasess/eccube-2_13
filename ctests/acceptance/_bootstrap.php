@@ -39,6 +39,7 @@ if ($num < ($config['fixture_product_num'] + 2)) {
     echo '.'.PHP_EOL;
 
     $category_ids = $objGenerator->createCategories();
+    var_dump($category_ids);
     foreach ($product_ids as $product_id) {
         $objGenerator->relateProductCategories($product_id, array_rand(array_flip($category_ids), $faker->numberBetween(2, count($category_ids) - 1)));
     }
