@@ -49,10 +49,14 @@ if ($num < ($config['fixture_product_num'] + 2)) {
 $num = $objQuery->count('dtb_order');
 $customer_ids = $objQuery->getCol('customer_id', 'dtb_customer', 'del_flg = 0');
 $product_class_ids = $objQuery->getCol('product_class_id', 'dtb_products_class', 'del_flg = 0');
+var_dump('product_class_ids: all');
+var_dump($product_class_ids);
 if ($num < $config['fixture_order_num']) {
     echo 'Generating Orders';
     foreach ($customer_ids as $customer_id) {
         $target_product_class_ids = array_rand($product_class_ids, $faker->numberBetween(2, count($product_class_ids) - 1));
+        var_dump('product_class_ids: target');
+        var_dump($target_product_class_ids);
         $charge = $faker->randomNumber(4);
         $discount = $faker->numberBetween(0, $charge);
         $order_count_per_customer = $objQuery->count('dtb_order', 'customer_id = ?', [$customer_id]);
