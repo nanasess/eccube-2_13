@@ -658,6 +658,9 @@ class FixtureGenerator
                 $where);
         }
 
+        if (!is_array($product_class_ids)) {
+            var_dump($product_class_ids);
+        }
         $orderDetails = array_map(function ($product_class_id) use ($order_id) {
             return $this->createOrderDetailAsArray($product_class_id, $order_id);
         }, $product_class_ids);
