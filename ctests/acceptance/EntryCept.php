@@ -14,6 +14,7 @@ $I->see('ご利用規約');
 // 同意するをクリック
 $I->click(['xpath' => '//*[@id="form1"]/div/ul/li[2]/a']);
 $I->see('会員登録(入力ページ)');
+$I->expect('パスワード文字列は '.$password.' を使用します');
 
 $form = [
     'name01' => $faker->lastName,
