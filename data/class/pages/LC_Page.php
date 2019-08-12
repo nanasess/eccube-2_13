@@ -67,7 +67,10 @@ class LC_Page
     /** 店舗基本情報 */
     public $arrSiteInfo;
 
-    /** プラグインを実行フラグ */
+    /**
+     * プラグインを実行フラグ
+     * @deprecated 定数 PLUGIN_ACTIVATE_FLAG を使用してください
+     */
     public $plugin_activate_flg = PLUGIN_ACTIVATE_FLAG;
 
     /** POST に限定する mode */
@@ -89,6 +92,7 @@ class LC_Page
      */
     public function init()
     {
+        $this->sendAdditionalHeader();
         // 開始時刻を設定する。
         $this->timeStart = microtime(true);
 
@@ -104,7 +108,7 @@ class LC_Page
         }
 
         // スーパーフックポイントを実行.
-        $objPlugin = SC_Helper_Plugin_Ex::getSingletonInstance($this->plugin_activate_flg);
+        $objPlugin = SC_Helper_Plugin_Ex::getSingletonInstance();
         $objPlugin->doAction('LC_Page_preProcess', array($this));
 
         // 店舗基本情報取得
@@ -136,7 +140,7 @@ class LC_Page
      */
     public function sendResponse()
     {
-        $objPlugin = SC_Helper_Plugin_Ex::getSingletonInstance($this->plugin_activate_flg);
+        $objPlugin = SC_Helper_Plugin_Ex::getSingletonInstance();
         // ローカルフックポイントを実行.
         $this->doLocalHookpointAfter($objPlugin);
 
@@ -509,5 +513,17 @@ class LC_Page
             $msg = "REQUEST_METHOD=[{$_SERVER['REQUEST_METHOD']}]では実行不能な mode=[$mode] が指定されました。";
             trigger_error($msg, E_USER_ERROR);
         }
+    }
+
+    /**
+     * 追加の HTTP ヘッダを送信する.
+     *
+     * 主にセキュリティ関連のヘッダを送信する.
+     */
+    public function sendAdditionalHeader()
+    {
+        header('X-XSS-Protection: 1; mode=block');
+        header('X-Content-Type-Options: nosniff');
+        header('X-Frame-Options: DENY');
     }
 }
