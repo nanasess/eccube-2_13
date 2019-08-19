@@ -4,26 +4,19 @@
     "type": "project",
     "homepage": "http://www.ec-cube.net/",
     "license": [
-        "GPL-2.0",
-        "Commercial"
+       "GPL-2.0",
+       "Commercial"
     ],
     "support": {
         "issues": "https://github.com/EC-CUBE/eccube-2_13/issues"
     },
     "config": {
         "vendor-dir": "data/vendor",
+        "platform": {
+            "php": "5.4"
+        },
         "optimize-autoloader": true,
         "sort-packages": true
-    },
-    "repositories": {
-        "nanasess/mdl_loginwith_amazonpay": {
-            "type": "path",
-            "url": "../mdl_loginwith_amazonpay"
-        },
-        "nanasess/mdl_sso": {
-            "type": "path",
-            "url": "../mdl_sso"
-        }
     },
     "require-dev": {
         "captbaritone/mailcatcher-codeception-module": "1.2.1",
@@ -36,9 +29,9 @@
         "ext-gd": "*",
         "ext-mbstring": "*",
         "bondas83/mdb2_driver_mysqli": "^1.5",
+        "guzzlehttp/guzzle": "^6.3",
         "mobiledetect/mobiledetectlib": "^2.8",
         "nanasess/mdb2_driver_pgsql": "^1.5",
-        "nanasess/mdl_loginwith_amazonpay": "*@dev",
         "nanasess/mdl_sso": "*@dev",
         "pear/archive_tar": "^1.4.3",
         "pear/mail": "*",
@@ -57,5 +50,11 @@
             "data/class",
             "data/class_extends"
         ]
+    },
+    "repositories": {
+        "nanasess/mdl_sso": {
+            "type": "path",
+            "url": "../mdl_sso"
+        }
     }
 }
