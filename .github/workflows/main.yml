@@ -23,7 +23,7 @@ jobs:
         mysql database: 'myapp_test'
         mysql root password: 'password'
     - name: Setup Composer
-      uses: nanasess/composer-installer-action@v1
+      uses: nanasess/composer-installer-action@master
     - name: Install to Composer
       run: composer install --no-interaction -o
     - name: Setup to EC-CUBE
