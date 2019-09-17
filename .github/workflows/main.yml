@@ -1,17 +1,41 @@
-name: CI
-
-on: [push]
-
+name: CI/CD for EC-CUBE
+on: [push, pull_request]
 jobs:
-  build:
-
-    runs-on: ubuntu-latest
-
+  run:
+    name: Run
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      matrix:
+        operating-system: [ ubuntu-16.04 ]
+        php: [ 5.4, 5.5, 5.6, 7.1, 7.2, 7.3 ]
+        db: [ mysql ]
     steps:
-    - uses: actions/checkout@v1
-    - name: Run a one-line script
-      run: echo Hello, world!
-    - name: Run a multi-line script
-      run: |
-        echo Add other actions to build,
-        echo test, and deploy your project.
+    - name: Checkout
+      uses: actions/checkout@master
+      uses: shivammathur/setup-php@1
+    - name: Setup PHP
+      uses: nanasess/setup-php@master
+      with:
+        php-version: ${{ matrix.php }}
+    - uses: mirromutth/mysql-action@v1.1
+      with:
+        mysql version: '5.7'
+        mysql database: 'myapp_test'
+        mysql root password: 'password'
+    - name: Setup Composer
+      uses: nanasess/composer-installer-action@v1
+    - name: Install to Composer
+      run: composer install --no-interaction -o
+      run: php composer.phar install --no-interaction -o
+    - name: Setup to EC-CUBE
+      env:
+        DB: ${{ matrix.db }}
+        USER: root
+        DBUSER: root
+        DBPASS: password
+        DBNAME: myapp_test
+        HTTP_URL: http://localhost:8085/
+        HTTPS_URL: http://localhost:8085/
+      run: ./eccube_install.sh ${DB}
+    - name: Run to PHPUnit
+      run: data/vendor/bin/phpunit --exclude-group classloader
