@@ -16,6 +16,14 @@ jobs:
       uses: nanasess/setup-php@master
       with:
         php-version: ${{ matrix.php }}
+    - name: Setup MySQL
+      uses: mirromutth/mysql-action@v1.1
+      with:
+        host port: '3307'
+        container port: '3306'
+        mysql version: '5.7'
+        mysql database: 'myapp_test'
+        mysql root password: 'password'
     - name: Setup Composer
       uses: nanasess/composer-installer-action@master
     - name: Install to Composer
@@ -27,6 +35,7 @@ jobs:
         DBUSER: root
         DBPASS: password
         DBNAME: myapp_test
+        DBPORT: '3307'
         HTTP_URL: http://localhost:8085/
         HTTPS_URL: http://localhost:8085/
       run: ./eccube_install.sh ${DB}
