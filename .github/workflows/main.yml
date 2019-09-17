@@ -16,12 +16,6 @@ jobs:
       uses: nanasess/setup-php@master
       with:
         php-version: ${{ matrix.php }}
-    - name: Setup MySQL
-      uses: mirromutth/mysql-action@v1.1
-      with:
-        mysql version: '5.7'
-        mysql database: 'myapp_test'
-        mysql root password: 'password'
     - name: Setup Composer
       uses: nanasess/composer-installer-action@master
     - name: Install to Composer
