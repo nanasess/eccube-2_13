@@ -12,12 +12,12 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@master
-      uses: shivammathur/setup-php@1
     - name: Setup PHP
       uses: nanasess/setup-php@master
       with:
         php-version: ${{ matrix.php }}
-    - uses: mirromutth/mysql-action@v1.1
+    - name: Setup MySQL
+      uses: mirromutth/mysql-action@v1.1
       with:
         mysql version: '5.7'
         mysql database: 'myapp_test'
@@ -26,7 +26,6 @@ jobs:
       uses: nanasess/composer-installer-action@v1
     - name: Install to Composer
       run: composer install --no-interaction -o
-      run: php composer.phar install --no-interaction -o
     - name: Setup to EC-CUBE
       env:
         DB: ${{ matrix.db }}
