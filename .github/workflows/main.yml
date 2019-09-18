@@ -50,7 +50,9 @@ jobs:
         DBPORT: '3307'
         HTTP_URL: http://localhost:8085/
         HTTPS_URL: http://localhost:8085/
-      run: ./eccube_install.sh ${DB}
+      run: |
+        sudo apt-get install -y mysql-client
+        ./eccube_install.sh ${DB}
     - name: Setup to EC-CUBE with PostgreSQL
       if: matrix.db == 'pgsql'
       env:
@@ -61,7 +63,9 @@ jobs:
         DBPORT: '5432'
         HTTP_URL: http://localhost:8085/
         HTTPS_URL: http://localhost:8085/
-      run: ./eccube_install.sh ${DB}
+      run: |
+        sudo apt-get install -y postgresql-client
+        ./eccube_install.sh ${DB}
 
     - name: Run to PHPUnit
       run: data/vendor/bin/phpunit --exclude-group classloader
