@@ -33,7 +33,11 @@ jobs:
         postgresql db: 'myapp_test'
         postgresql user: 'postgres'
         postgresql password: 'password'
-
+    - name: remove libpq5
+      if: matrix.php <= 5.5
+      run: |
+        sudo apt-get purge 'php*-fpm'
+        sudo apt-get purge 'libpq5'
     - name: Setup Composer
       uses: nanasess/composer-installer-action@master
     - name: Install to Composer
@@ -69,3 +73,21 @@ jobs:
 
     - name: Run to PHPUnit
       run: data/vendor/bin/phpunit --exclude-group classloader
+
+    - name: Setup E2E environment
+      run: |
+        sudo apt-get install -y build-essential debconf-utils screen google-chrome-stable
+        sudo apt-get install -y unzip xvfb autogen autoconf libtool pkg-config nasm libgconf-2-4
+        wget -c -nc --retry-connrefused --tries=0 http://chromedriver.storage.googleapis.com/2.43/chromedriver_linux64.zip
+        unzip -o -q chromedriver_linux64.zip
+        docker pull schickling/mailcatcher
+        docker run -d -p 1080:1080 -p 1025:1025 --name mailcatcher schickling/mailcatcher
+        ./chromedriver --url-base=/wd/hub &
+        echo ">>> Started chrome-driver"
+        /usr/bin/Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
+        echo ">>> Started xvfb"
+    - name: Run to Codeception
+      run: |
+        php data/vendor/bin/codecept build
+        php -S 0.0.0.0:8085 -t html/ &
+        php data/vendor/bin/codecept run --env chrome --steps
