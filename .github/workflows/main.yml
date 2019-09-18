@@ -93,3 +93,7 @@ jobs:
         php data/vendor/bin/codecept build
         php -S 0.0.0.0:8085 -t html/ &
         php data/vendor/bin/codecept run --env chrome --steps
+
+    - name: Check to /tmp
+      run:  ls -al /tmp
+
