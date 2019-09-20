@@ -252,6 +252,18 @@ $I->seeElement(['css' => '#graph-image > img']);
 $I->expect('表の表示を確認する');
 $I->seeElement(['id' => 'total-member']);
 
+// see https://github.com/Codeception/Codeception/issues/5518
+$I->executeInSelenium(function(\Facebook\WebDriver\Remote\RemoteWebDriver $webdriver) {
+  $params = array(
+      'cmd' => 'Page.setDownloadBehavior',
+      'params' => array(
+          "behavior" => 'allow',
+          "downloadPath" => '/tmp',
+      ),
+  );
+  $webdriver->executeCustomCommand('/session/:sessionId/chromium/send_command', 'POST', $params);
+});
+
 $I->click('CSVダウンロード');
 $file = $I->getLastDownloadFile('/^total\d{12}\.csv$/');
 $I->assertTrue(count(file($file)) >= 2, '2行以上のファイルがダウンロードされている');
