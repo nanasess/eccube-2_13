@@ -8,8 +8,8 @@ jobs:
       fail-fast: false
       matrix:
         operating-system: [ ubuntu-16.04 ]
-        php: [ 5.4, 5.5, 5.6, 7.1, 7.2, 7.3 ]
-        db: [ mysql, pgsql ]
+        php: [ 7.3 ]
+        db: [ mysql ]
         include:
           - db: mysql
             dbport: '3307'
@@ -66,17 +66,12 @@ jobs:
         HTTP_URL: http://localhost:8085/
         HTTPS_URL: http://localhost:8085/
       run: |
-        if [[ ${DB} = 'mysql' ]]
-          then
-            sudo apt-get install -y mysql-client
-          else
-            sudo apt-get install -y postgresql-client
-        fi
+        sudo apt-get install -y mysql-client postgresql-client
         ./eccube_install.sh ${DB}
 
-    - name: Run to PHPUnit
-      continue-on-error: true
-      run: data/vendor/bin/phpunit --exclude-group classloader
+    # - name: Run to PHPUnit
+    #   continue-on-error: true
+    #   run: data/vendor/bin/phpunit --exclude-group classloader
 
     - name: Setup E2E environment
       run: |
