@@ -10,6 +10,19 @@ jobs:
         operating-system: [ ubuntu-16.04 ]
         php: [ 5.4, 5.5, 5.6, 7.1, 7.2, 7.3 ]
         db: [ mysql, pgsql ]
+        include:
+          - db: mysql
+            dbport: '3307'
+            dbuser: 'root'
+          - db: pgsql
+            dbport: '5432'
+            dbuser: 'postgres'
+    services:
+      mailcatcher:
+        image: schickling/mailcatcher
+        ports:
+          - 1080:1080
+          - 1025:1025
     steps:
     - name: Checkout
       uses: actions/checkout@master
@@ -17,59 +30,48 @@ jobs:
       uses: nanasess/setup-php@master
       with:
         php-version: ${{ matrix.php }}
+
     - name: Setup MySQL
       if: matrix.db == 'mysql'
       uses: mirromutth/mysql-action@v1.1
       with:
-        host port: '3307'
+        host port: ${{ matrix.dbport }}
         container port: '3306'
         mysql version: '5.7'
         mysql database: 'myapp_test'
         mysql root password: 'password'
+
     - name: Setup PostgreSQL
       if: matrix.db == 'pgsql'
       uses: harmon758/postgresql-action@master
       with:
         postgresql version: '11'
         postgresql db: 'myapp_test'
-        postgresql user: 'postgres'
+        postgresql user: ${{ matrix.dbuser }}
         postgresql password: 'password'
-    - name: remove libpq5
-      if: matrix.php <= 5.5
-      run: |
-        sudo apt-get purge 'php*-fpm'
-        sudo apt-get purge 'libpq5'
+
     - name: Setup Composer
       uses: nanasess/composer-installer-action@master
     - name: Install to Composer
       run: composer install --no-interaction -o
 
-    - name: Setup to EC-CUBE with MySQL
-      if: matrix.db == 'mysql'
+    - name: Setup to EC-CUBE
       env:
         DB: ${{ matrix.db }}
-        USER: root
-        DBUSER: root
+        USER: ${{ matrix.dbuser }}
+        DBUSER: ${{ matrix.dbuser }}
         DBPASS: password
         DBNAME: myapp_test
-        DBPORT: '3307'
+        DBPORT: ${{ matrix.dbport }}
         HTTP_URL: http://localhost:8085/
         HTTPS_URL: http://localhost:8085/
       run: |
-        sudo apt-get install -y mysql-client
-        ./eccube_install.sh ${DB}
-    - name: Setup to EC-CUBE with PostgreSQL
-      if: matrix.db == 'pgsql'
-      env:
-        DB: ${{ matrix.db }}
-        DBUSER: postgres
-        DBPASS: password
-        DBNAME: myapp_test
-        DBPORT: '5432'
-        HTTP_URL: http://localhost:8085/
-        HTTPS_URL: http://localhost:8085/
-      run: |
-        sudo apt-get install -y postgresql-client
+        if [[ ${DB} = 'mysql' ]]
+          then
+            sudo apt-get install -y mysql-client
+          else
+            sudo apt-get install -y postgresql-client
+        fi
         ./eccube_install.sh ${DB}
 
     - name: Run to PHPUnit
@@ -82,8 +84,6 @@ jobs:
         sudo apt-get install -y unzip xvfb autogen autoconf libtool pkg-config nasm libgconf-2-4
         wget -c -nc --retry-connrefused --tries=0 http://chromedriver.storage.googleapis.com/2.43/chromedriver_linux64.zip
         unzip -o -q chromedriver_linux64.zip
-        docker pull schickling/mailcatcher
-        docker run -d -p 1080:1080 -p 1025:1025 --name mailcatcher schickling/mailcatcher
         ./chromedriver --url-base=/wd/hub &
         echo ">>> Started chrome-driver"
         /usr/bin/Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
@@ -96,4 +96,34 @@ jobs:
 
     - name: Check to /tmp
       run:  ls -al /tmp
+  deploy:
+    name: deploy
+    runs-on: ubuntu-16.04
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+    - name: Packaging
+      run: |
+        echo "remove obsolete files..."
+        rm -rf .setttings
+        rm -rf .buildpath
+        rm -rf .project
+        rm -rf tests
+        rm -rf ctests
+        rm -rf templates
+        rm -rf html/test
+        rm -rf .git
 
+        echo "set permissions..."
+        chmod -R a+w html/install/temp
+        chmod -R a+w html/user_data
+        chmod -R a+w html/upload
+        chmod -R a+w data/cache
+        chmod -R a+w data/downloads
+        chmod -R a+w data/Smarty
+        chmod -R a+w data/class
+        chmod -R a+w data/class_extends
+        chmod -R a+w data/logs
+        chmod -R a+w data/upload
+        chmod -R a+w data/config
+        chmod a+w html
