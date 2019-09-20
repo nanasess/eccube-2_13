@@ -47,4 +47,4 @@ env:
                                 download.default_directory: '/tmp'
                                 download.directory_upgrade: true
                                 download.prompt_for_download: false
-                                browser.set_download_behavior: {behavior: "allow"}
+                                browser.set_download_behavior: {behavior: "allow", downloadPath: '/tmp'}
