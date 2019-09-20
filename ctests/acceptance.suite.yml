@@ -25,7 +25,7 @@ modules:
                 unexpectedAlertBehaviour: 'accept'
                 elementScrollBehavior: 1
                 chromeOptions:
-                  args: ["--headless", "--disable-gpu"]
+                  args: ["--disable-gpu"]
         MailCatcherGuzzle5:
             url: 'http://127.0.0.1'
             port: '1080'
