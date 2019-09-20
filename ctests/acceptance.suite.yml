@@ -19,13 +19,13 @@ modules:
             url: 'http://localhost:8085/'
             host: 'localhost'
             port: 9515
-            window_size: 1680x3000
+            window_size: false
             wait: 10
             capabilities:
                 unexpectedAlertBehaviour: 'accept'
                 elementScrollBehavior: 1
                 chromeOptions:
-                  args: ["disable-dev-shm-usage", "no-sandbox", "disable-infobars", "headless", "disable-gpu"]
+                  args: ["--headless", "--disable-gpu"]
         MailCatcherGuzzle5:
             url: 'http://127.0.0.1'
             port: '1080'
@@ -45,6 +45,3 @@ env:
                         chromeOptions:
                             prefs:
                                 download.default_directory: '/tmp'
-                                download.directory_upgrade: true
-                                download.prompt_for_download: false
-                                browser.set_download_behavior: {behavior: "allow", downloadPath: '/tmp'}
