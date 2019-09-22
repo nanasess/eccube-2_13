@@ -76,7 +76,7 @@ jobs:
     - name: Setup E2E environment
       run: |
         sudo apt-get install -y build-essential debconf-utils screen google-chrome-stable
-        sudo apt-get install -y unzip xvfb autogen autoconf libtool pkg-config nasm libgconf-2-4
+        sudo apt-get install -y unzip xvfb autogen autoconf libtool pkg-config nasm libgconf-2-4 x11-apps
         wget -c -nc --retry-connrefused --tries=0 http://chromedriver.storage.googleapis.com/2.43/chromedriver_linux64.zip
         unzip -o -q chromedriver_linux64.zip
         ./chromedriver --url-base=/wd/hub &
