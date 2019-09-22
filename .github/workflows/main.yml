@@ -81,7 +81,7 @@ jobs:
         unzip -o -q chromedriver_linux64.zip
         ./chromedriver --url-base=/wd/hub &
         echo ">>> Started chrome-driver"
-        Xvfb -ac :99 -screen 0 1280x1024x16 &
+        sudo Xvfb -ac :99 -screen 0 1280x1024x24 &
         echo ">>> Started xvfb"
     - name: Run to Codeception
       env:
