@@ -88,8 +88,11 @@ jobs:
         DISPLAY: ':99'
       continue-on-error: true
       run: |
-        env
         curl http://localhost:9515/wd/hub
+        echo ">>> google-chrome --version"
+        google-chrome --version
+        echo ">>> google-chrome-stable --version"
+        google-chrome-stable --version
         php data/vendor/bin/codecept build
         php -S 0.0.0.0:8085 -t html/ &
         php data/vendor/bin/codecept run --env chrome --steps
