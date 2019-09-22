@@ -19,7 +19,7 @@ modules:
             url: 'http://localhost:8085/'
             host: 'localhost'
             port: 9515
-            window_size: false
+            window_size: 1680x3000
             wait: 10
             capabilities:
                 unexpectedAlertBehaviour: 'accept'

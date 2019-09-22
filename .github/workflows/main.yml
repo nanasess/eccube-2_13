@@ -81,11 +81,15 @@ jobs:
         unzip -o -q chromedriver_linux64.zip
         ./chromedriver --url-base=/wd/hub &
         echo ">>> Started chrome-driver"
-        /usr/bin/Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
+        Xvfb -ac :99 -screen 0 1280x1024x16 &
         echo ">>> Started xvfb"
     - name: Run to Codeception
+      env:
+        DISPLAY: ':99'
       continue-on-error: true
       run: |
+        env
+        curl http://localhost:9515/wd/hub
         php data/vendor/bin/codecept build
         php -S 0.0.0.0:8085 -t html/ &
         php data/vendor/bin/codecept run --env chrome --steps
