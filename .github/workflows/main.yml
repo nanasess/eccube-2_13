@@ -26,16 +26,17 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@master
-    - name: Setup PHP
-      uses: nanasess/setup-php@master
-      with:
-        php-version: ${{ matrix.php }}
+
     - name: Remove libpq5
       if: matrix.php <= 5.5
       run: |
         sudo apt-get purge 'php*-fpm'
         sudo apt-get purge 'libpq5'
-        sudo ln -s /usr/local/lib/libpq.so.5 /usr/lib/x86_64-linux-gnu/libpq.so.5
+
+    - name: Setup PHP
+      uses: nanasess/setup-php@master
+      with:
+        php-version: ${{ matrix.php }}
 
     - name: Setup MySQL
       if: matrix.db == 'mysql'
