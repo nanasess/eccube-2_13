@@ -30,8 +30,8 @@ jobs:
     - name: Remove libpq5
       if: matrix.php <= 5.5
       run: |
-        sudo apt-get purge 'php*-fpm'
-        sudo apt-get purge 'libpq5'
+        sudo apt-fast purge 'php*'
+        sudo apt-fast purge 'libpq5'
         dpkg -l
         ls -al /usr/lib/x86_64-linux-gnu
         sudo ln -s /usr/local/lib/libpq.so.5 /usr/lib/x86_64-linux-gnu/libpq.so.5
@@ -76,16 +76,16 @@ jobs:
         HTTP_URL: http://localhost:8085/
         HTTPS_URL: http://localhost:8085/
       run: |
-        sudo apt-get install -y mysql-client postgresql-client
+        sudo apt-fast install -y mysql-client postgresql-client
         ./eccube_install.sh ${DB}
 
     - name: Run to PHPUnit
-      run: data/vendor/bin/phpunit --exclude-group classloader
+      run: php data/vendor/bin/phpunit --exclude-group classloader
 
     - name: Setup E2E environment
       run: |
-        sudo apt-get install -y build-essential debconf-utils screen google-chrome-stable
-        sudo apt-get install -y unzip xvfb autogen autoconf libtool pkg-config nasm libgconf-2-4 x11-apps
+        sudo apt-fast install -y build-essential debconf-utils screen google-chrome-stable
+        sudo apt-fast install -y unzip xvfb autogen autoconf libtool pkg-config nasm libgconf-2-4 x11-apps
         wget -c -nc --retry-connrefused --tries=0 http://chromedriver.storage.googleapis.com/2.43/chromedriver_linux64.zip
         unzip -o -q chromedriver_linux64.zip
         export DISPLAY=:99
