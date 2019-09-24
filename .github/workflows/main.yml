@@ -7,7 +7,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        operating-system: [ ubuntu-16.04 ]
+        operating-system: [ ubuntu-16.04, ubuntu-18.04 ]
         php: [ 5.4, 5.5, 5.6, 7.1, 7.2, 7.3 ]
         db: [ mysql, pgsql ]
         include:
@@ -27,18 +27,20 @@ jobs:
     - name: Checkout
       uses: actions/checkout@master
 
-    - name: Remove libpq5
+    - name: check to lib
       if: matrix.php <= 5.5
       run: |
-        sudo apt-fast purge 'libpq5'
-        sudo ln -s /usr/local/lib/libpq.so.5 /usr/lib/x86_64-linux-gnu/libpq.so.5
-        ls -al /usr/lib/x86_64-linux-gnu
         ls -al /usr/local/lib
 
     - name: Setup PHP
       uses: nanasess/setup-php@master
       with:
         php-version: ${{ matrix.php }}
+
+    - name: check to lib 
+      if: matrix.php <= 5.5
+      run: |
+        ls -al /usr/local/lib
 
     - name: Setup MySQL
       if: matrix.db == 'mysql'
