@@ -30,11 +30,10 @@ jobs:
     - name: Remove libpq5
       if: matrix.php <= 5.5
       run: |
-        sudo apt-fast purge 'php*'
         sudo apt-fast purge 'libpq5'
-        dpkg -l
-        ls -al /usr/lib/x86_64-linux-gnu
         sudo ln -s /usr/local/lib/libpq.so.5 /usr/lib/x86_64-linux-gnu/libpq.so.5
+        ls -al /usr/lib/x86_64-linux-gnu
+        ls -al /usr/local/lib
 
     - name: Setup PHP
       uses: nanasess/setup-php@master
