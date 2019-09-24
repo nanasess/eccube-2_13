@@ -32,6 +32,9 @@ jobs:
       run: |
         sudo apt-get purge 'php*-fpm'
         sudo apt-get purge 'libpq5'
+        dpkg -l
+        ls -al /usr/lib/x86_64-linux-gnu
+        sudo ln -s /usr/local/lib/libpq.so.5 /usr/lib/x86_64-linux-gnu/libpq.so.5
 
     - name: Setup PHP
       uses: nanasess/setup-php@master
