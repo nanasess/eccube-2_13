@@ -1,5 +1,10 @@
 name: CI/CD for EC-CUBE
-on: [push, pull_request]
+on:
+  push:
+  pull_request:
+  release:
+    types: [ published ]
+  
 jobs:
   run-on-linux:
     name: Run on Linux
@@ -50,8 +55,6 @@ jobs:
         postgresql user: ${{ matrix.dbuser }}
         postgresql password: 'password'
 
-    - name: Setup Composer
-      uses: nanasess/composer-installer-action@master
     - name: Install to Composer
       run: composer install --no-interaction -o
 
@@ -141,3 +144,32 @@ jobs:
 
     - name: Run to PHPUnit
       run: data/vendor/bin/phpunit --exclude-group classloader
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-18.04
+    needs: [ run-on-linux, run-on-windows ]
+    steps:
+    - name: Checkout
+      if: github.event_name == 'release' && (github.event.action == 'published' || github.event.action == 'prereleased' )
+      uses: actions/checkout@master
+    - name: Setup PHP
+      if: github.event_name == 'release' && (github.event.action == 'published' || github.event.action == 'prereleased' )
+      uses: nanasess/setup-php@master
+      with:
+        php-version: '7.3'
+    - name: Install to Composer
+      if: github.event_name == 'release' && (github.event.action == 'published' || github.event.action == 'prereleased' )
+      run: composer install --no-scripts --no-dev --no-interaction --optimize-autoloader
+    - name: Packaging
+      if: github.event_name == 'release' && (github.event.action == 'published' || github.event.action == 'prereleased' )
+      run: |
+        env
+        rm -rf $GITHUB_WORKSPACE/.git
+        cd ../
+        mkdir -p $GITHUB_REF
+        cp -rp $GITHUB_WORKSPACE/* $GITHUB_REF
+        tar czfp $GITHUB_REF.tar.gz $GITHUB_REF
+        zip -ry $GITHUB_REF.zip $GITHUB_REF 1> /dev/null
+    - name: Deploy
+      if: github.event_name == 'release' && (github.event.action == 'published' || github.event.action == 'prereleased' )
+      run: aws help
