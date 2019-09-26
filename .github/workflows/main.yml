@@ -152,32 +152,63 @@ jobs:
     - name: Checkout
       if: github.event_name == 'release' && (github.event.action == 'published' || github.event.action == 'prereleased' )
       uses: actions/checkout@master
-    - name: Setup PHP
-      if: github.event_name == 'release' && (github.event.action == 'published' || github.event.action == 'prereleased' )
-      uses: nanasess/setup-php@master
-      with:
-        php-version: '7.3'
+    # - name: Setup PHP
+    #   if: github.event_name == 'release' && (github.event.action == 'published' || github.event.action == 'prereleased' )
+    #   uses: nanasess/setup-php@master
+    #   with:
+    #     php-version: '7.3'
     - name: Install to Composer
       if: github.event_name == 'release' && (github.event.action == 'published' || github.event.action == 'prereleased' )
       run: composer install --no-scripts --no-dev --no-interaction --optimize-autoloader
+
+    - name: Dump GitHub context
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: echo "$GITHUB_CONTEXT"
+    - name: Dump job context
+      env:
+        JOB_CONTEXT: ${{ toJson(job) }}
+      run: echo "$JOB_CONTEXT"
+    - name: Dump steps context
+      env:
+        STEPS_CONTEXT: ${{ toJson(steps) }}
+      run: echo "$STEPS_CONTEXT"
+    - name: Dump runner context
+      env:
+        RUNNER_CONTEXT: ${{ toJson(runner) }}
+      run: echo "$RUNNER_CONTEXT"
+    - name: Dump strategy context
+      env:
+        STRATEGY_CONTEXT: ${{ toJson(strategy) }}
+      run: echo "$STRATEGY_CONTEXT"
+    - name: Dump matrix context
+      env:
+        MATRIX_CONTEXT: ${{ toJson(matrix) }}
+      run: echo "$MATRIX_CONTEXT"
+
     - name: Packaging
       if: github.event_name == 'release' && (github.event.action == 'published' || github.event.action == 'prereleased' )
+      working-directory: ../
+      env:
+        TAG_NAME: ${{ github.event.release.tag_name }}
+        REPOSITORY_NAME: ${{ github.event.repository.name }}
       run: |
-        env
+        echo $TAG_NAME
         rm -rf $GITHUB_WORKSPACE/.git
-        cd ../
-        mkdir -p $GITHUB_REF
-        cp -rp $GITHUB_WORKSPACE/* $GITHUB_REF
-        tar czfp $GITHUB_REF.tar.gz $GITHUB_REF
-        zip -ry $GITHUB_REF.zip $GITHUB_REF 1> /dev/null
+        pwd
+        ls -al
+        tar czfp $TAG_NAME.tar.gz $REPOSITORY_NAME
+        zip -ry $TAG_NAME.zip $REPOSITORY_NAME 1> /dev/null
+        ls -al
     - name: Deploy
       if: github.event_name == 'release' && (github.event.action == 'published' || github.event.action == 'prereleased' )
       run: aws help
     - name: Upload binaries to release
+      if: github.event_name == 'release' && (github.event.action == 'published' || github.event.action == 'prereleased' )
       uses: svenstaro/upload-release-action@v1-release
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: ${{ github.ref }}.tar.gz
-        asset_name: ${{ github.ref }}.tar.gz
+        file: ${{ runner.workspace }}/${{ github.event.release.tag_name }}.tar.gz
+        asset_name: ${{ github.event.release.tag_name }}.tar.gz
         tag: ${{ github.ref }}
         overwrite: true
