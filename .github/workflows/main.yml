@@ -31,66 +31,66 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@master
-    - name: Setup PHP
-      uses: nanasess/setup-php@master
-      with:
-        php-version: ${{ matrix.php }}
+    # - name: Setup PHP
+    #   uses: nanasess/setup-php@master
+    #   with:
+    #     php-version: ${{ matrix.php }}
 
-    - name: Setup MySQL
-      if: matrix.db == 'mysql'
-      uses: mirromutth/mysql-action@v1.1
-      with:
-        host port: ${{ matrix.dbport }}
-        container port: '3306'
-        mysql version: '5.7'
-        mysql database: 'myapp_test'
-        mysql root password: 'password'
+    # - name: Setup MySQL
+    #   if: matrix.db == 'mysql'
+    #   uses: mirromutth/mysql-action@v1.1
+    #   with:
+    #     host port: ${{ matrix.dbport }}
+    #     container port: '3306'
+    #     mysql version: '5.7'
+    #     mysql database: 'myapp_test'
+    #     mysql root password: 'password'
 
-    - name: Setup PostgreSQL
-      if: matrix.db == 'pgsql'
-      uses: harmon758/postgresql-action@master
-      with:
-        postgresql version: '11'
-        postgresql db: 'myapp_test'
-        postgresql user: ${{ matrix.dbuser }}
-        postgresql password: 'password'
+    # - name: Setup PostgreSQL
+    #   if: matrix.db == 'pgsql'
+    #   uses: harmon758/postgresql-action@master
+    #   with:
+    #     postgresql version: '11'
+    #     postgresql db: 'myapp_test'
+    #     postgresql user: ${{ matrix.dbuser }}
+    #     postgresql password: 'password'
 
-    - name: Install to Composer
-      run: composer install --no-interaction -o
+    # - name: Install to Composer
+    #   run: composer install --no-interaction -o
 
-    - name: Setup to EC-CUBE
-      env:
-        DB: ${{ matrix.db }}
-        USER: ${{ matrix.dbuser }}
-        DBUSER: ${{ matrix.dbuser }}
-        DBPASS: password
-        DBNAME: myapp_test
-        DBPORT: ${{ matrix.dbport }}
-        HTTP_URL: http://localhost:8085/
-        HTTPS_URL: http://localhost:8085/
-      run: |
-        sudo apt-fast install -y mysql-client postgresql-client
-        ./eccube_install.sh ${DB}
+    # - name: Setup to EC-CUBE
+    #   env:
+    #     DB: ${{ matrix.db }}
+    #     USER: ${{ matrix.dbuser }}
+    #     DBUSER: ${{ matrix.dbuser }}
+    #     DBPASS: password
+    #     DBNAME: myapp_test
+    #     DBPORT: ${{ matrix.dbport }}
+    #     HTTP_URL: http://localhost:8085/
+    #     HTTPS_URL: http://localhost:8085/
+    #   run: |
+    #     sudo apt-fast install -y mysql-client postgresql-client
+    #     ./eccube_install.sh ${DB}
 
-    - name: Run to PHPUnit
-      run: data/vendor/bin/phpunit --exclude-group classloader
+    # - name: Run to PHPUnit
+    #   run: data/vendor/bin/phpunit --exclude-group classloader
 
-    - name: Setup E2E environment
-      run: |
-        sudo apt-fast install -y build-essential debconf-utils screen google-chrome-stable
-        sudo apt-fast install -y unzip xvfb autogen autoconf libtool pkg-config nasm libgconf-2-4 x11-apps
-        wget -c -nc --retry-connrefused --tries=0 http://chromedriver.storage.googleapis.com/2.43/chromedriver_linux64.zip
-        unzip -o -q chromedriver_linux64.zip
-        export DISPLAY=:99
-        ./chromedriver --url-base=/wd/hub &
-        echo ">>> Started chrome-driver"
-        sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 &
-        echo ">>> Started xvfb"
-    - name: Run to Codeception
-      run: |
-        php data/vendor/bin/codecept build
-        php -S 0.0.0.0:8085 -t html/ &
-        php data/vendor/bin/codecept run --env chrome --steps
+    # - name: Setup E2E environment
+    #   run: |
+    #     sudo apt-fast install -y build-essential debconf-utils screen google-chrome-stable
+    #     sudo apt-fast install -y unzip xvfb autogen autoconf libtool pkg-config nasm libgconf-2-4 x11-apps
+    #     wget -c -nc --retry-connrefused --tries=0 http://chromedriver.storage.googleapis.com/2.43/chromedriver_linux64.zip
+    #     unzip -o -q chromedriver_linux64.zip
+    #     export DISPLAY=:99
+    #     ./chromedriver --url-base=/wd/hub &
+    #     echo ">>> Started chrome-driver"
+    #     sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 &
+    #     echo ">>> Started xvfb"
+    # - name: Run to Codeception
+    #   run: |
+    #     php data/vendor/bin/codecept build
+    #     php -S 0.0.0.0:8085 -t html/ &
+    #     php data/vendor/bin/codecept run --env chrome --steps
   run-on-windows:
     name: Run on Windows
     runs-on: ${{ matrix.operating-system }}
@@ -103,47 +103,47 @@ jobs:
     - name: Checkout
       uses: actions/checkout@master
 
-    - name: Setup PHP
-      uses: nanasess/setup-php@master
-      with:
-        php-version: ${{ matrix.php }}
+    # - name: Setup PHP
+    #   uses: nanasess/setup-php@master
+    #   with:
+    #     php-version: ${{ matrix.php }}
 
-    - name: Setup MailCatcher
-      run: gem install -N mailcatcher -v 0.6.5
-      shell: bash
-    - name: Run to MailCatcher
-      run: mailcatcher &
-      shell: bash
+    # - name: Setup MailCatcher
+    #   run: gem install -N mailcatcher -v 0.6.5
+    #   shell: bash
+    # - name: Run to MailCatcher
+    #   run: mailcatcher &
+    #   shell: bash
 
-    - name: Setup to database
-      run: |
-        choco install -y mysql --version 5.7.18
-        mysql --user=root -e "CREATE DATABASE `myapp_test`;"
-        mysql --user=root -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';FLUSH PRIVILEGES;"
-        mysql --user=root --password=password -h 127.0.0.1 -e "SELECT version();"
+    # - name: Setup to database
+    #   run: |
+    #     choco install -y mysql --version 5.7.18
+    #     mysql --user=root -e "CREATE DATABASE `myapp_test`;"
+    #     mysql --user=root -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';FLUSH PRIVILEGES;"
+    #     mysql --user=root --password=password -h 127.0.0.1 -e "SELECT version();"
 
-    - name: Install to Composer
-      run: |
-        php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-        php composer-setup.php
-        php -r "unlink('composer-setup.php');"
-        php composer.phar install
+    # - name: Install to Composer
+    #   run: |
+    #     php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+    #     php composer-setup.php
+    #     php -r "unlink('composer-setup.php');"
+    #     php composer.phar install
 
-    - name: Setup to EC-CUBE
-      env:
-        DB: mysql
-        USER: root
-        DBUSER: root
-        DBPASS: password
-        DBNAME: myapp_test
-        DBPORT: 3306
-        HTTP_URL: http://localhost:8085/
-        HTTPS_URL: http://localhost:8085/
-      run: bash eccube_install.sh mysql
-      shell: bash
+    # - name: Setup to EC-CUBE
+    #   env:
+    #     DB: mysql
+    #     USER: root
+    #     DBUSER: root
+    #     DBPASS: password
+    #     DBNAME: myapp_test
+    #     DBPORT: 3306
+    #     HTTP_URL: http://localhost:8085/
+    #     HTTPS_URL: http://localhost:8085/
+    #   run: bash eccube_install.sh mysql
+    #   shell: bash
 
-    - name: Run to PHPUnit
-      run: data/vendor/bin/phpunit --exclude-group classloader
+    # - name: Run to PHPUnit
+    #   run: data/vendor/bin/phpunit --exclude-group classloader
   deploy:
     name: Deploy
     runs-on: ubuntu-18.04
@@ -173,3 +173,11 @@ jobs:
     - name: Deploy
       if: github.event_name == 'release' && (github.event.action == 'published' || github.event.action == 'prereleased' )
       run: aws help
+    - name: Upload binaries to release
+      uses: svenstaro/upload-release-action@v1-release
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: ${{ github.ref }}.tar.gz
+        asset_name: ${{ github.ref }}.tar.gz
+        tag: ${{ github.ref }}
+        overwrite: true
