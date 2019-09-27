@@ -195,20 +195,86 @@ jobs:
       run: |
         echo $TAG_NAME
         rm -rf $GITHUB_WORKSPACE/.git
-        pwd
-        ls -al
         tar czfp $TAG_NAME.tar.gz $REPOSITORY_NAME
         zip -ry $TAG_NAME.zip $REPOSITORY_NAME 1> /dev/null
-        ls -al
+        md5sum $TAG_NAME.tar.gz | awk '{ print $1 }' > $TAG_NAME.tar.gz.checksum.md5
+        md5sum $TAG_NAME.zip | awk '{ print $1 }' > $TAG_NAME.zip.checksum.md5
+        sha1sum $TAG_NAME.tar.gz | awk '{ print $1 }' > $TAG_NAME.tar.gz.checksum.sha1
+        sha1sum $TAG_NAME.zip | awk '{ print $1 }' > $TAG_NAME.zip.checksum.sha1
+        sha256sum $TAG_NAME.tar.gz | awk '{ print $1 }' > $TAG_NAME.tar.gz.checksum.sha256
+        sha256sum $TAG_NAME.zip | awk '{ print $1 }' > $TAG_NAME.zip.checksum.sha256
     - name: Deploy
       if: github.event_name == 'release' && (github.event.action == 'published' || github.event.action == 'prereleased' )
       run: aws help
-    - name: Upload binaries to release
+    - name: Upload binaries to release of TGZ
       if: github.event_name == 'release' && (github.event.action == 'published' || github.event.action == 'prereleased' )
       uses: svenstaro/upload-release-action@v1-release
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: ${{ runner.workspace }}/${{ github.event.release.tag_name }}.tar.gz
         asset_name: ${{ github.event.release.tag_name }}.tar.gz
+        tag: ${{ github.ref }}
+        overwrite: true
+    - name: Upload binaries to release of ZIP
+      if: github.event_name == 'release' && (github.event.action == 'published' || github.event.action == 'prereleased' )
+      uses: svenstaro/upload-release-action@v1-release
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: ${{ runner.workspace }}/${{ github.event.release.tag_name }}.zip
+        asset_name: ${{ github.event.release.tag_name }}.zip
+        tag: ${{ github.ref }}
+        overwrite: true
+    - name: Upload binaries to release of TGZ md5 checksum
+      if: github.event_name == 'release' && (github.event.action == 'published' || github.event.action == 'prereleased' )
+      uses: svenstaro/upload-release-action@v1-release
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: ${{ runner.workspace }}/${{ github.event.release.tag_name }}.tar.gz.checksum.md5
+        asset_name: ${{ github.event.release.tag_name }}.tar.gz.checksum.md5
+        tag: ${{ github.ref }}
+        overwrite: true
+    - name: Upload binaries to release of TGZ sha1 checksum
+      if: github.event_name == 'release' && (github.event.action == 'published' || github.event.action == 'prereleased' )
+      uses: svenstaro/upload-release-action@v1-release
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: ${{ runner.workspace }}/${{ github.event.release.tag_name }}.tar.gz.checksum.sha1
+        asset_name: ${{ github.event.release.tag_name }}.tar.gz.checksum.sha1
+        tag: ${{ github.ref }}
+        overwrite: true
+    - name: Upload binaries to release of TGZ sha256 checksum
+      if: github.event_name == 'release' && (github.event.action == 'published' || github.event.action == 'prereleased' )
+      uses: svenstaro/upload-release-action@v1-release
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: ${{ runner.workspace }}/${{ github.event.release.tag_name }}.tar.gz.checksum.sha256
+        asset_name: ${{ github.event.release.tag_name }}.tar.gz.checksum.sha256
+        tag: ${{ github.ref }}
+        overwrite: true
+    - name: Upload binaries to release of ZIP md5 checksum
+      if: github.event_name == 'release' && (github.event.action == 'published' || github.event.action == 'prereleased' )
+      uses: svenstaro/upload-release-action@v1-release
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: ${{ runner.workspace }}/${{ github.event.release.tag_name }}.zip.checksum.md5
+        asset_name: ${{ github.event.release.tag_name }}.zip.checksum.md5
+        tag: ${{ github.ref }}
+        overwrite: true
+    - name: Upload binaries to release of ZIP sha1 checksum
+      if: github.event_name == 'release' && (github.event.action == 'published' || github.event.action == 'prereleased' )
+      uses: svenstaro/upload-release-action@v1-release
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: ${{ runner.workspace }}/${{ github.event.release.tag_name }}.zip.checksum.sha1
+        asset_name: ${{ github.event.release.tag_name }}.zip.checksum.sha1
+        tag: ${{ github.ref }}
+        overwrite: true
+    - name: Upload binaries to release of ZIP sha256 checksum
+      if: github.event_name == 'release' && (github.event.action == 'published' || github.event.action == 'prereleased' )
+      uses: svenstaro/upload-release-action@v1-release
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: ${{ runner.workspace }}/${{ github.event.release.tag_name }}.zip.checksum.sha256
+        asset_name: ${{ github.event.release.tag_name }}.zip.checksum.sha256
         tag: ${{ github.ref }}
         overwrite: true
