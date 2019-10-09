@@ -61,6 +61,9 @@ jobs:
     - name: Run to PHPUnit
       continue-on-error: true
       run: phpdbg -qrr data/vendor/bin/phpunit -c phpunit.xml.dist --exclude-group classloader
-    - name: Upload to Coveralls
+
+    - uses: codecov/codecov-action@v1.0.2
       continue-on-error: true
-      run: php data/vendor/bin/coveralls -v
+      with:
+        token: ${{secrets.CODECOV_TOKEN}}
+        file: ./reports/coverage/coverage.xml
