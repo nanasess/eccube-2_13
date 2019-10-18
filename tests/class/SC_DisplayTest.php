@@ -80,4 +80,14 @@ class SC_DisplayTest extends Common_TestCase
 
         $this->expectOutputRegex('/'.$expected.'/');
     }
+
+    /**
+     * @runInSeparateProcess
+     * @preserveGlobalState disabled
+     */
+    public function testActionExit()
+    {
+        SC_Response_Ex::actionExit();
+        self::fail();
+    }
 }
