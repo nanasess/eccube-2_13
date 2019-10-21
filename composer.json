@@ -35,7 +35,7 @@
         "php": ">=5.4.16",
         "ext-gd": "*",
         "ext-mbstring": "*",
-        "amzn/amazon-pay-sdk-php": "^3.4",
+        "amzn/amazon-pay-sdk-php": "^3.5",
         "bondas83/mdb2_driver_mysqli": "^1.5",
         "mobiledetect/mobiledetectlib": "^2.8",
         "nanasess/mdb2_driver_pgsql": "^1.5",
