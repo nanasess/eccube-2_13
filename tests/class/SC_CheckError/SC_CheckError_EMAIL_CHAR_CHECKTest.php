@@ -42,21 +42,22 @@ class SC_CheckError_EMAIL_CHAR_CHECKTest extends SC_CheckError_AbstractTestCase
     public function testEMAIL_CHAR_CHECKWithRegex()
     {
         $this->arrForm = [
-            self::FORM_NAME => $this->faker->regexify('^[a-zA-Z0-9_\.@\+\?-]+$')
+            self::FORM_NAME => $this->faker->regexify('^[a-zA-Z0-9_@\+\?-]+$')
         ];
         $this->expected = '';
         $this->scenario();
-        $this->verify('');
+        $this->verify($this->arrForm[self::FORM_NAME].' は使用可能なパターンのはず');
     }
 
     public function testEMAIL_CHAR_CHECKWithError()
     {
+        $email = $this->faker->randomNumber().'='.$this->faker->userName.'@'.$this->faker->safeEmailDomain;
         $this->arrForm = [
-            self::FORM_NAME => $this->faker->randomNumber().'='.$this->faker->userName.'@'.$this->faker->safeEmailDomain
+            self::FORM_NAME => $email
         ];
         $this->expected = '※ EMAIL_CHAR_CHECKに使用する文字を正しく入力してください。<br />';
 
         $this->scenario();
-        $this->verify();
+        $this->verify($email.' は使用できないパターンが含まれているはず');
     }
 }
