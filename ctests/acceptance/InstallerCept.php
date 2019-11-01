@@ -21,7 +21,7 @@ $I->see('ECサイトの設定');
 $I->expect('STEP1');
 $admindirectory = $faker->regexify('[A-Za-z0-9]{8,10}');
 $user = $faker->userName;
-$password = $faker->password(8, 10).'1';
+$password = $faker->regexify('[A-Za-z]{8,10}').$faker->regexify('[0-9]{3,5}');
 $I->fillField('input[name=shop_name]', $faker->name);
 $I->fillField('input[name=admin_mail]', $faker->safeEmail);
 $I->fillField('input[name=login_id]', $user);
