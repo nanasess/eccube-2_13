@@ -43,12 +43,10 @@ $I->fillField('input[name=db_port]', DB_PORT);
 $I->fillField('input[name=db_name]', DB_NAME);
 $I->fillField('input[name=db_user]', DB_USER);
 $I->fillField('input[name=db_password]', DB_PASSWORD);
-$I->click('次へ進む');
-$I->wait(1);
+$I->click(['xpath' => '//*[@id="form1"]/div/div[4]/ul/li[2]/a']); // 次へ進む
 
 $I->expect('STEP3');
 $I->see('データベースの初期化');
-$I->wait(1);
 $I->click('次へ進む');
 
 $I->see('データベースの初期化');
