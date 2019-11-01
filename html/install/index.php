@@ -1150,6 +1150,8 @@ function renameAdminDir($adminDir)
 
     $oldAdminDir = SC_Utils_Ex::sfTrimURL(ADMIN_DIR);
     $oldAdminDir = $oldAdminDir == '' ? 'admin' : $oldAdminDir;
+    var_dump($adminDir);
+    var_dump($oldAdminDir);
     if ($adminDir === $oldAdminDir) {
         return true;
     }
