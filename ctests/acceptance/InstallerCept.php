@@ -27,6 +27,11 @@ $I->fillField('input[name=admin_mail]', $faker->safeEmail);
 $I->fillField('input[name=login_id]', $user);
 $I->fillField('input[name=login_pass]', $password);
 $I->fillField('input[name=admin_dir]', $admindirectory);
+
+$I->click('>> オプション設定');
+$I->selectOption('input[name=mail_backend]', 'smtp');
+$I->fillField('input[name=smtp_host]', '127.0.0.1');
+$I->fillField('input[name=smtp_port]', '1025');
 $I->click('次へ進む');
 
 $I->expect('STEP2');
