@@ -59,6 +59,7 @@ $I->see('サイト情報について');
 $I->click('次へ進む');
 
 $I->see('インストールが完了しました。');
+$I->seeInDatabase('dtb_member', ['login_id' => $user]);
 $I->click('管理画面へログインする');
 
 $I->seeInCurrentUrl('/'.$admindirectory);
