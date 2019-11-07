@@ -81,17 +81,13 @@ class SC_ClassAutoloader
             if (is_array($plugin_class) && count($plugin_class) > 0) {
                 $arrPluginClassName = $plugin_class;
                 $arrPluginClassPath = $plugin_classpath;
-                var_dump($is_ex);
-                var_dump($arrClassNamePart);
-                var_dump($plugin_class);
-                var_dump($plugin_classpath);
                 
                 foreach ($arrPluginClassName as $key => $plugin_class) {
                     $plugin_classpath = $arrPluginClassPath[$key];
 
                     if ($is_ex) {
                         // Ex ファイルへのフックの場合のみチェイン変更する。
-
+                        var_dump('parent_classname: '.$parent_classname);
                         if ($parent_classname) {
                             $exp = "/(class[ ]+{$plugin_class}[ ]+extends +)[a-zA-Z_\-]+( *{?)/";
                             $replace = '$1' . $parent_classname . '$2';
@@ -101,6 +97,7 @@ class SC_ClassAutoloader
                             $base_class_str = preg_replace($exp, $replace, $base_class_str, 1);
                             eval($base_class_str);
                         } else {
+                            var_dump('plugin_classpath: '.$plugin_classpath);
                             include $plugin_classpath;
                         }
 
@@ -112,10 +109,14 @@ class SC_ClassAutoloader
 
                 if ($is_ex) {
                     $exp = "/(class[ ]+{$class}[ ]+extends +)[a-zA-Z_\-]+( *{?)/";
+                    var_dump($exp);
                     $replace = '$1' . $parent_classname . '$2';
+                    var_dump($replace);
+                    var_dump($classpath);
                     $base_class_str = file_get_contents($classpath);
                     $base_class_str = str_replace(array('<?php', '?>'), '', $base_class_str);
                     $base_class_str = preg_replace($exp, $replace, $base_class_str, 1);
+                    var_dump($base_class_str);
                     eval($base_class_str);
 
                     return;
