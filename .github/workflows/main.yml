@@ -1,7 +1,5 @@
 name: CI/CD for EC-CUBE
 on:
-  push:
-  pull_request:
   release:
     types: [ published ]
 

@@ -85,4 +85,4 @@ before_test:
   - bash eccube_install.sh mysql
 
 test_script:
-  - data/vendor/bin/phpunit --exclude-group classloader
+  - data/vendor/bin/phpunit --group classloader
