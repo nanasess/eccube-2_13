@@ -29,6 +29,7 @@
  * @package Batch
  * @author EC-CUBE CO.,LTD.
  * @version $Id$
+ * @deprecated
  */
 class SC_Batch_Update extends SC_Batch
 {
