@@ -27,10 +27,11 @@
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">./data/class/</directory>
+            <directory suffix=".php">./data/module/</directory>
             <exclude>
+                <directory>./data/class/api/</directory>
                 <directory>./data/class/pages/</directory>
                 <directory>./data/class/graph/</directory>
-                <directory>./data/class/batch/</directory>
                 <directory>./data/class/db/dbfactory/</directory>
             </exclude>
         </whitelist>
