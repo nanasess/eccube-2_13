@@ -24,6 +24,7 @@ addons:
       - google-chrome
     packages:
       - dpkg  # see https://github.com/travis-ci/travis-ci/issues/9361
+      - debian-archive-keyring
       - google-chrome-stable
 
 env:
