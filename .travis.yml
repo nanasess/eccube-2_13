@@ -59,6 +59,7 @@ matrix:
       env: DB=pgsql USER=postgres DBPASS=password DBUSER=postgres COVERAGE=true
 
 before_install:
+  - sudo apt-get -y install debian-archive-keyring
   - wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add
   - sudo apt-get -y update
   - sudo apt-get -y install google-chrome-stable
