@@ -83,12 +83,13 @@ $I->seeInCurrentUrl('/');
 $I->see('インストール完了後に /install フォルダを削除してください。');
 
 $I->expect('/install/index.php を削除します');
-unlink(HTML_REALDIR.'install/'.DIR_INDEX_FILE);
+$install_dir = __DIR__.'/../../html/install';
+unlink($install_dir.DIR_INDEX_FILE);
 $I->seeInCurrentUrl('/');
 $I->see('インストール完了後に /install フォルダを削除してください。');
 
 $I->expect('/install を削除します');
-$install_dir = __DIR__.'/../../install';
+
 $files = new RecursiveIteratorIterator(
     new RecursiveDirectoryIterator($install_dir, FilesystemIterator::SKIP_DOTS),
     RecursiveIteratorIterator::CHILD_FIRST
