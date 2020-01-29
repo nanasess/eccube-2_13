@@ -21,9 +21,9 @@ env:
     global:
         - DBNAME=myapp_test DBSERVER=127.0.0.1 HTTP_URL=http://localhost:8085/ HTTPS_URL=http://localhost:8085/
     matrix:
-        - DB=mysql USER=root DBPASS=' ' DBUSER=root
-        - DB=pgsql USER=postgres DBPASS=password DBUSER=postgres
-        - DB=pgsql USER=postgres DBPASS=password DBUSER=postgres COVERAGE=true # Use for coverage report
+        - DB=mysql USER=root DBPASS=' ' DBUSER=root DBPORT=3306
+        - DB=pgsql USER=postgres DBPASS=password DBUSER=postgres DBPORT=5432
+        - DB=pgsql USER=postgres DBPASS=password DBUSER=postgres DBPORT=5432 COVERAGE=true # Use for coverage report
 
 matrix:
   fast_finish: true
