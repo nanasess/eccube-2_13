@@ -65,6 +65,13 @@ class SC_Helper_Session {
       */
      function sfSessRead($id) {
          if (!$this->objDb->sfTabaleExists("dtb_session")) return '';
+        // SameSite=None を未サポート UA 向け対応
+         if (empty($_COOKIE['ECSESSID']) && isset($_COOKIE['legacy-ECSESSID']) && $id !== $_COOKIE['legacy-ECSESSID']) {
+             // session_id と $_COOKIE['legacy-ECSESSID'] が異なる場合は ECSESSID の cookie が拒否されたと見なす
+             GC_Utils_Ex::gfPrintLog('replace session id: ECSESSID=>legacy-ECSESSID');
+             $id = $_COOKIE['legacy-ECSESSID']; // 互換用 cookie からセッションデータを読み込む
+             unset($_COOKIE['legacy-ECSESSID']);
+         }
          $objQuery = new SC_Query();
          $arrRet = $objQuery->select("sess_data", "dtb_session", "sess_id = ?", array($id));
          if (empty($arrRet)) {
