@@ -24,7 +24,6 @@
     "require-dev": {
         "captbaritone/mailcatcher-codeception-module": "1.2.1",
         "codeception/codeception": "2.4.1",
-        "codeception/phpunit-wrapper": "6.0.10",
         "fzaninotto/faker": "^1.9",
         "nanasess/phpunit48": "dev-experimental as 4.8.41"
     },
@@ -34,6 +33,7 @@
         "ext-mbstring": "*",
         "bondas83/mdb2_driver_mysqli": "^1.5",
         "mobiledetect/mobiledetectlib": "^2.8",
+        "nanasess/codeception-phpunit48-wrapper": "dev-relate-phpunit48",
         "nanasess/mdb2_driver_pgsql": "^1.5",
         "pear/archive_tar": "^1.4.3",
         "pear/mail": "*",
