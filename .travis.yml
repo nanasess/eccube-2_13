@@ -59,7 +59,7 @@ matrix:
       env: DB=pgsql USER=postgres DBPASS=password DBUSER=postgres DBPORT=5432 COVERAGE=true
 
 before_install:
-  - if [[ $DIST = 'trusty' ]]; then sudo apt-get -y install google-chrome-stable --allow-unauthenticated ; fi
+  - if [[ $DIST = 'trusty' ]]; then sudo apt-get -y install dpkg google-chrome-stable --allow-unauthenticated ; fi
 
 before_script:
   - if [[ $DB = 'mysql' ]]; then mysql -e "SET GLOBAL sql_mode = 'NO_ENGINE_SUBSTITUTION';" ; fi
