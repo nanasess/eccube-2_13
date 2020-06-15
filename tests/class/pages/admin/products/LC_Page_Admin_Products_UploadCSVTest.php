@@ -58,7 +58,7 @@ class LC_Page_Admin_Products_UploadCSVTest extends Common_TestCase
         }
         fclose($fp);
 
-        $this->expected = 10;
+        $this->expected = 100;
         $this->actual = $line_count;
 
         $this->verify('列数');
