@@ -54,7 +54,12 @@ class SC_CustomerTest extends Common_TestCase
         $this->objCustomer->setLogin($this->email);
         $this->assertNotEmpty($this->objCustomer->customer_data);
         $this->assertTrue(is_array($this->objCustomer->customer_data));
-        $this->expected = $this->email;
+        if (DIRECTORY_SEPARATOR === '\\') {
+            $this->expected = $this->email.'windowisfailure';
+        } else {
+            $this->expected = $this->email;
+        }
+
         $this->actual = $this->objCustomer->getValue('email');
         $this->verify();
     }

@@ -8,7 +8,7 @@ $I->wantTo('正常にインストール可能か検証する');
 // $I->amOnPage('/');
 $I->amOnPage('/install/');
 $I->seeInCurrentUrl('/install/');
-$I->see('EC-CUBEのインストールを開始します。');
+$I->see('EC-CUBEのインストールを開始します。yo');
 $I->click('次へ進む');
 
 $I->expect('パーミッションのチェックをします');
