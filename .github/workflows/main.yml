@@ -136,7 +136,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: linux-php${{ matrix.php }}-${{ matrix.db }}-evidence
-        path: ctest/_output/
+        path: ctests/_output/
     - name: Upload logs
       if: failure()
       uses: actions/upload-artifact@v2
@@ -206,9 +206,11 @@ jobs:
       shell: bash
 
     - name: Run to PHPUnit
+      run: data/vendor/bin/phpunit --exclude-group classloader
+    - name: Run to PHPUnit classloader
+      run: data/vendor/bin/phpunit --group classloader
+    - name: Run to PHPUnit SessionFactory
       run: |
-        data/vendor/bin/phpunit --exclude-group classloader
-        data/vendor/bin/phpunit --group classloader
         sed 's|http://|https://|g' -i.bak data/config/config.php
         data/vendor/bin/phpunit tests/class/SC_SessionFactoryTest.php
     - name: Upload logs
@@ -344,13 +346,13 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: install-linux-php${{ matrix.php }}-${{ matrix.db }}-evidence
-        path: ctest/_output/
+        path: ctests/_output/
     - name: Upload logs
       if: failure()
       uses: actions/upload-artifact@v2
       with:
         name: install-linux-php${{ matrix.php }}-${{ matrix.db }}-logs
-        path: html/install/temp/install.log*
+        path: html/install/temp/
 
   deploy:
     name: Deploy
