@@ -31,7 +31,7 @@ $I->amGoingTo('売上集計>期間別集計>月度集計');
 $I->click('月度で集計する');
 
 $I->expect('グラフの表示を確認する');
-$message = $I->grabPageSource('.message');
+$message = $I->grabPageSource();
 if (strpos('該当するデータはありません。', $message) !== false) {
     $I->see('該当するデータはありません。', ['css' => '.message']);
 } else {
@@ -46,7 +46,7 @@ $I->selectOption('select[name=search_startyear]', date('Y', strtotime('-1 year')
 $I->click('期間で集計する');
 
 $I->expect('グラフの表示を確認する');
-$message = $I->grabPageSource('.message');
+$message = $I->grabPageSource();
 if (strpos('該当するデータはありません。', $message) !== false) {
     $I->see('該当するデータはありません。', ['css' => '.message']);
 } else {
@@ -60,7 +60,7 @@ $I->amGoingTo('売上集計>期間別集計>期間集計>月別');
 $I->click('月別');
 
 $I->expect('グラフの表示を確認する');
-$message = $I->grabPageSource('.message');
+$message = $I->grabPageSource();
 if (strpos('該当するデータはありません。', $message) !== false) {
     $I->see('該当するデータはありません。', ['css' => '.message']);
 } else {
@@ -74,7 +74,7 @@ $I->amGoingTo('売上集計>期間別集計>期間集計>年別');
 $I->click('年別');
 
 $I->expect('グラフの表示を確認する');
-$message = $I->grabPageSource('.message');
+$message = $I->grabPageSource();
 if (strpos('該当するデータはありません。', $message) !== false) {
     $I->see('該当するデータはありません。', ['css' => '.message']);
 } else {
@@ -89,7 +89,7 @@ $I->amGoingTo('売上集計>期間別集計>期間集計>曜日別');
 $I->click('曜日別');
 
 $I->expect('グラフの表示を確認する');
-$message = $I->grabPageSource('.message');
+$message = $I->grabPageSource();
 if (strpos('該当するデータはありません。', $message) !== false) {
     $I->see('該当するデータはありません。', ['css' => '.message']);
 } else {
@@ -103,7 +103,7 @@ $I->amGoingTo('売上集計>期間別集計>期間集計>時間別');
 $I->click('時間別');
 
 $I->expect('グラフの表示を確認する');
-$message = $I->grabPageSource('.message');
+$message = $I->grabPageSource();
 if (strpos('該当するデータはありません。', $message) !== false) {
     $I->see('該当するデータはありません。', ['css' => '.message']);
 } else {
@@ -136,7 +136,7 @@ $I->amGoingTo('売上集計>商品別集計>月度集計');
 $I->click('月度で集計する');
 
 $I->expect('グラフの表示を確認する');
-$message = $I->grabPageSource('.message');
+$message = $I->grabPageSource();
 if (strpos('該当するデータはありません。', $message) !== false) {
     $I->see('該当するデータはありません。', ['css' => '.message']);
 } else {
@@ -151,7 +151,7 @@ $I->selectOption('select[name=search_startyear]', date('Y', strtotime('-1 year')
 $I->click('期間で集計する');
 
 $I->expect('グラフの表示を確認する');
-$message = $I->grabPageSource('.message');
+$message = $I->grabPageSource();
 if (strpos('該当するデータはありません。', $message) !== false) {
     $I->see('該当するデータはありません。', ['css' => '.message']);
 } else {
@@ -165,7 +165,7 @@ $I->amGoingTo('売上集計>商品集計>期間集計>会員');
 $I->click('会員');
 
 $I->expect('グラフの表示を確認する');
-$message = $I->grabPageSource('.message');
+$message = $I->grabPageSource();
 if (strpos('該当するデータはありません。', $message) !== false) {
     $I->see('該当するデータはありません。', ['css' => '.message']);
 } else {
@@ -179,7 +179,7 @@ $I->amGoingTo('売上集計>商品集計>期間集計>非会員');
 $I->click('非会員');
 
 $I->expect('グラフの表示を確認する');
-$message = $I->grabPageSource('.message');
+$message = $I->grabPageSource();
 if (strpos('該当するデータはありません。', $message) !== false) {
     $I->see('該当するデータはありません。', ['css' => '.message']);
 } else {
@@ -212,7 +212,7 @@ $I->amGoingTo('売上集計>年代別集計>月度集計');
 $I->click('月度で集計する');
 
 $I->expect('グラフの表示を確認する');
-$message = $I->grabPageSource('.message');
+$message = $I->grabPageSource();
 if (strpos('該当するデータはありません。', $message) !== false) {
     $I->see('該当するデータはありません。', ['css' => '.message']);
 } else {
@@ -227,7 +227,7 @@ $I->selectOption('select[name=search_startyear]', date('Y', strtotime('-1 year')
 $I->click('期間で集計する');
 
 $I->expect('グラフの表示を確認する');
-$message = $I->grabPageSource('.message');
+$message = $I->grabPageSource();
 if (strpos('該当するデータはありません。', $message) !== false) {
     $I->see('該当するデータはありません。', ['css' => '.message']);
 } else {
@@ -241,7 +241,7 @@ $I->amGoingTo('売上集計>年代別集計>期間集計>会員');
 $I->click('会員');
 
 $I->expect('グラフの表示を確認する');
-$message = $I->grabPageSource('.message');
+$message = $I->grabPageSource();
 if (strpos('該当するデータはありません。', $message) !== false) {
     $I->see('該当するデータはありません。', ['css' => '.message']);
 } else {
@@ -255,7 +255,7 @@ $I->amGoingTo('売上集計>年代別集計>期間集計>非会員');
 $I->click('非会員');
 
 $I->expect('グラフの表示を確認する');
-$message = $I->grabPageSource('.message');
+$message = $I->grabPageSource();
 if (strpos('該当するデータはありません。', $message) !== false) {
     $I->see('該当するデータはありません。', ['css' => '.message']);
 } else {
@@ -288,7 +288,7 @@ $I->amGoingTo('売上集計>職業別集計>月度集計');
 $I->click('月度で集計する');
 
 $I->expect('グラフの表示を確認する');
-$message = $I->grabPageSource('.message');
+$message = $I->grabPageSource();
 if (strpos('該当するデータはありません。', $message) !== false) {
     $I->see('該当するデータはありません。', ['css' => '.message']);
 } else {
@@ -303,7 +303,7 @@ $I->selectOption('select[name=search_startyear]', date('Y', strtotime('-1 year')
 $I->click('期間で集計する');
 
 $I->expect('グラフの表示を確認する');
-$message = $I->grabPageSource('.message');
+$message = $I->grabPageSource();
 if (strpos('該当するデータはありません。', $message) !== false) {
     $I->see('該当するデータはありません。', ['css' => '.message']);
 } else {
@@ -336,7 +336,7 @@ $I->amGoingTo('売上集計>会員別集計>月度集計');
 $I->click('月度で集計する');
 
 $I->expect('グラフの表示を確認する');
-$message = $I->grabPageSource('.message');
+$message = $I->grabPageSource();
 if (strpos('該当するデータはありません。', $message) !== false) {
     $I->see('該当するデータはありません。', ['css' => '.message']);
 } else {
@@ -351,7 +351,7 @@ $I->selectOption('select[name=search_startyear]', date('Y', strtotime('-1 year')
 $I->click('期間で集計する');
 
 $I->expect('グラフの表示を確認する');
-$message = $I->grabPageSource('.message');
+$message = $I->grabPageSource();
 if (strpos('該当するデータはありません。', $message) !== false) {
     $I->see('該当するデータはありません。', ['css' => '.message']);
 } else {
