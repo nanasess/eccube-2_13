@@ -127,6 +127,13 @@ class SC_Helper_Purchase
             $objQuery->begin();
         }
 
+        $current_order_status_id = $objQuery->get('status', 'dtb_order', 'order_id = ?', array($order_id));
+        if ($orderStatus == $current_order_status_id) {
+            if (!$in_transaction) {
+                $objQuery->commit();
+            }
+            return;
+        }
         $arrParams = array();
         $arrParams['status'] = $orderStatus;
         if ($is_delete) {
@@ -137,9 +144,9 @@ class SC_Helper_Purchase
 
         $arrOrderDetail = $this->getOrderDetail($order_id);
         foreach ($arrOrderDetail as $arrDetail) {
-            $objQuery->update('dtb_products_class', array(),
-                              'product_class_id = ?', array($arrDetail['product_class_id']),
-                              array('stock' => 'stock + ?'), array($arrDetail['quantity']));
+            $stock = $objQuery->get('stock', 'dtb_products_class', 'product_class_id = ? FOR UPDATE', array($arrDetail['product_class_id']));
+            $objQuery->update('dtb_products_class', array('stock' => $arrDetail['quantity'] + $stock),
+                              'product_class_id = ?', array($arrDetail['product_class_id']));
         }
         if (!$in_transaction) {
             $objQuery->commit();
@@ -191,6 +198,7 @@ class SC_Helper_Purchase
             $objSiteSession->setRegistFlag();
         }
 
+        unset($_SESSION['order_id']);
         if (!$in_transaction) {
             $objQuery->commit();
         }
