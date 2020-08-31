@@ -1,9 +1,9 @@
 name: EC-CUBE2 weekly build
 on:
   schedule:
-     # 日曜日の 00:00 (JST) に処理を実行する
-     # UTC の 15:00 は JST だと翌日の 00:00
-     - cron: '*/5 * * * *'
+    # 日曜日の 00:00 (JST) に処理を実行する
+    # UTC の 15:00 は JST だと翌日の 00:00
+    - cron: '*/5 * * * *'
 jobs:
   build:
     name: Create Release
