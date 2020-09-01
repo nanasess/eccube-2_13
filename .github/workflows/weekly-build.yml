@@ -54,7 +54,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAG_NAME: eccube2-weekly-${{ env.REL_DATE }}
-          REPOSITORY_NAME: ${{ github.event.repository.name }}
+          REPOSITORY_NAME: ${{ github.repository }}
         run: |
           export DATA='{"event_type": "deploy", "client_payload": {"tag_name": "'${TAG_NAME}'"}}'
           curl -v -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/${REPOSITORY_NAME}/dispatches \
