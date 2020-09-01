@@ -3,7 +3,7 @@ on:
   schedule:
     # 日曜日の 00:00 (JST) に処理を実行する
     # UTC の 15:00 は JST だと翌日の 00:00
-    - cron: '*/5 * * * *'
+    - cron: '0 15 * * 2'
 jobs:
   build:
     name: Create Release
@@ -16,15 +16,13 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          curl -v -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/nanasess/ec-cube2/releases --data '
-{
-  "tag_name": "eccube2-weekly-'${REL_DATE}'",
-  "target_commitish": "master",
-  "name": "weekly/'${REL_DATE}'",
-  "body": "EC-CUBE 2.17系の Weekly build🚀 です。毎週の改善内容を反映しております。\n常に安定して動作するよう努めていますが、思わぬ不具合を取り込んでしまっている場合もあります。十分に検証の上ご利用ください。",
-  "draft": false,
-  "prerelease": false
-}'
+          curl -v -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/nanasess/ec-cube2/releases \
+          --data "{  \"tag_name\": \"eccube2-weekly-${REL_DATE}\", \
+          \"target_commitish\": \"master\", \
+          \"name\": \"weekly/${REL_DATE}\", \
+          \"body\": \"EC-CUBE 2.17系の Weekly build🚀 です。毎週の改善内容を反映しております。\n常に安定して動作するよう努めていますが、思わぬ不具合を取り込んでしまっている場合もあります。十分に検証の上ご利用ください。\", \
+          \"draft\": false, \
+          \"prerelease\": true }"
         # id: create_release
         # uses: actions/create-release@v1
         # env:
