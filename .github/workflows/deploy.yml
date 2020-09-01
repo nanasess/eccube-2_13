@@ -122,8 +122,10 @@ jobs:
           chmod -R o+w $GITHUB_WORKSPACE/data/config
           chmod o+w $GITHUB_WORKSPACE/html
           echo "complession files..."
-          tar czfp $TAG_NAME.tar.gz $REPOSITORY_NAME
-          zip -ry $TAG_NAME.zip $REPOSITORY_NAME 1> /dev/null
+          pwd
+          ls -al
+          tar czfp $TAG_NAME.tar.gz ec-cube2
+          zip -ry $TAG_NAME.zip ec-cube2 1> /dev/null
           md5sum $TAG_NAME.tar.gz | awk '{ print $1 }' > $TAG_NAME.tar.gz.checksum.md5
           md5sum $TAG_NAME.zip | awk '{ print $1 }' > $TAG_NAME.zip.checksum.md5
           sha1sum $TAG_NAME.tar.gz | awk '{ print $1 }' > $TAG_NAME.tar.gz.checksum.sha1
