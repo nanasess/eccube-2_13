@@ -26,12 +26,36 @@ jobs:
 
           draft: false
           prerelease: true
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+      - name: Dump job context
+        env:
+          JOB_CONTEXT: ${{ toJson(job) }}
+        run: echo "$JOB_CONTEXT"
+      - name: Dump steps context
+        env:
+          STEPS_CONTEXT: ${{ toJson(steps) }}
+        run: echo "$STEPS_CONTEXT"
+      - name: Dump runner context
+        env:
+          RUNNER_CONTEXT: ${{ toJson(runner) }}
+        run: echo "$RUNNER_CONTEXT"
+      - name: Dump strategy context
+        env:
+          STRATEGY_CONTEXT: ${{ toJson(strategy) }}
+        run: echo "$STRATEGY_CONTEXT"
+      - name: Dump matrix context
+        env:
+          MATRIX_CONTEXT: ${{ toJson(matrix) }}
+        run: echo "$MATRIX_CONTEXT"
       - name: Deploy dispatcher
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAG_NAME: eccube2-weekly-${{ env.REL_DATE }}
           REPOSITORY_NAME: ${{ github.event.repository.name }}
         run: |
-          DATA='{"event_type": "deploy", "client_payload": {"tag_name": "'${TAG_NAME}'"}}' \
+          export DATA='{"event_type": "deploy", "client_payload": {"tag_name": "'${TAG_NAME}'"}}'
           curl -v -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/${REPOSITORY_NAME}/dispatches \
           --data ${DATA}
