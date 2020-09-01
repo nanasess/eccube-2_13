@@ -10,6 +10,8 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
+      with:
+        ref: ${{ github.event.client_payload.tag_name }}
 
     - name: Get Composer Cache Directory
       id: composer-cache
