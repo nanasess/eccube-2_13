@@ -3,7 +3,7 @@ on:
   schedule:
     # 日曜日の 00:00 (JST) に処理を実行する
     # UTC の 15:00 は JST だと翌日の 00:00
-    - cron: '*/10 * * * *'
+    - cron: '0 15 * * *'
   release:
     types: [ published ]
 jobs:
@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: TAG_NAME for schedule
         if: github.event_name == 'schedule'
-        run: echo "::set-env name=TAG_NAME::eccube2-weekly-$(date +%Y%m%d%H%M%S)"
+        run: echo "::set-env name=TAG_NAME::eccube2-weekly-$(date +%Y%m%d)"
       - name: TAG_NAME for release
         if: github.event_name == 'release'
         env:
