@@ -36,8 +36,8 @@ jobs:
             <table>
             <thead><tr><th>File</th><th>Checksum(sha256)</th></tr></thead>
             <tbody>
-            <tr><td><a href="https://github.com/${{ github.repository }}/releases/download/${{ env.TAG_NAME }}.tar.gz">${{ env.TAG_NAME }}.tar.gz</a></td><td><a href="https://github.com/${{ github.repository }}/releases/download/${{ env.TAG_NAME }}.tar.gz.checksum.sha256">${{ env.TAG_NAME }}.tar.gz.checksum.sha256</a></td></tr>
-            <tr><td><a href="https://github.com/${{ github.repository }}/releases/download/${{ env.TAG_NAME }}.zip">${{ env.TAG_NAME }}.zip</a></td><td><a href="https://github.com/${{ github.repository }}/releases/download/${{ env.TAG_NAME }}.zip.checksum.sha256">${{ env.TAG_NAME }}.zip.checksum.sha256</a></td></tr>
+            <tr><td><a href="https://github.com/${{ github.repository }}/releases/download/${{ env.TAG_NAME }}/${{ env.TAG_NAME }}.tar.gz">${{ env.TAG_NAME }}.tar.gz</a></td><td><a href="https://github.com/${{ github.repository }}/releases/download/${{ env.TAG_NAME }}/${{ env.TAG_NAME }}.tar.gz.checksum.sha256">${{ env.TAG_NAME }}.tar.gz.checksum.sha256</a></td></tr>
+            <tr><td><a href="https://github.com/${{ github.repository }}/releases/download/${{ env.TAG_NAME }}/${{ env.TAG_NAME }}.zip">${{ env.TAG_NAME }}.zip</a></td><td><a href="https://github.com/${{ github.repository }}/releases/download/${{ env.TAG_NAME }}/${{ env.TAG_NAME }}.zip.checksum.sha256">${{ env.TAG_NAME }}.zip.checksum.sha256</a></td></tr>
             </tbody>
             </table>
 
