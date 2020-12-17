@@ -3,8 +3,10 @@ $I = new AcceptanceTester($scenario);
 if (!function_exists('ImageTTFText')) {
     $scenario->skip('Freetype not supported.');
 }
+$admin_url = '/'.getenv('ADMIN_DIR');
+
 $I->wantTo('売上集計画面を確認する');
-$I->amOnPage('/admin');
+$I->amOnPage($admin_url);
 
 $I->fillField('input[name=login_id]', 'admin');
 $I->fillField('input[name=password]', 'password');
@@ -13,7 +15,7 @@ $I->click(['css' => '.btn-tool-format']);
 $I->see('ログイン : 管理者 様');
 
 $I->amGoingTo('売上集計＞期間別集計');
-$I->amOnPage('/admin/total/?page=term');
+$I->amOnPage($admin_url.'/total/?page=term');
 
 $I->expect('日付の初期値を確認する');
 $I->seeInField('select[name=search_startyear_m]', date('Y'));
@@ -118,7 +120,7 @@ if (strpos('該当するデータはありません。', $message) !== false) {
 }
 
 $I->amGoingTo('売上集計＞商品別集計');
-$I->amOnPage('/admin/total/?page=products');
+$I->amOnPage($admin_url.'/total/?page=products');
 
 $I->expect('日付の初期値を確認する');
 $I->seeInField('select[name=search_startyear_m]', date('Y'));
@@ -194,7 +196,7 @@ if (strpos('該当するデータはありません。', $message) !== false) {
 }
 
 $I->amGoingTo('売上集計＞年代別集計');
-$I->amOnPage('/admin/total/?page=age');
+$I->amOnPage($admin_url.'/total/?page=age');
 
 $I->expect('日付の初期値を確認する');
 $I->seeInField('select[name=search_startyear_m]', date('Y'));
@@ -270,7 +272,7 @@ if (strpos('該当するデータはありません。', $message) !== false) {
 }
 
 $I->amGoingTo('売上集計＞職業別集計');
-$I->amOnPage('/admin/total/?page=job');
+$I->amOnPage($admin_url.'/total/?page=job');
 
 $I->expect('日付の初期値を確認する');
 $I->seeInField('select[name=search_startyear_m]', date('Y'));
@@ -318,7 +320,7 @@ if (strpos('該当するデータはありません。', $message) !== false) {
 }
 
 $I->amGoingTo('売上集計＞会員別集計');
-$I->amOnPage('/admin/total/?page=member');
+$I->amOnPage($admin_url.'/total/?page=member');
 
 $I->expect('日付の初期値を確認する');
 $I->seeInField('select[name=search_startyear_m]', date('Y'));

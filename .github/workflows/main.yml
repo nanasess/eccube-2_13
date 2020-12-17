@@ -92,9 +92,11 @@ jobs:
         DBPORT: ${{ matrix.dbport }}
         HTTP_URL: http://localhost:8085/
         HTTPS_URL: http://localhost:8085/
+        ADMIN_DIR: manager/
       run: |
         sudo apt-fast install -y mysql-client postgresql-client
         ./eccube_install.sh ${DB}
+        mv html/admin html/manager
 
     - name: setup-chromedriver
       uses: nanasess/setup-chromedriver@master
@@ -129,6 +131,7 @@ jobs:
         DBSERVER: 127.0.0.1
         HTTP_URL: http://localhost:8085/
         HTTPS_URL: http://localhost:8085/
+        ADMIN_DIR: manager/
       run: |
         php data/vendor/bin/codecept build
         php -S 0.0.0.0:8085 -t html/ &
