@@ -18,7 +18,7 @@ php:
 
 env:
     global:
-        - DBNAME=myapp_test DBSERVER=127.0.0.1 HTTP_URL=http://localhost:8085/ HTTPS_URL=http://localhost:8085/
+        - DBNAME=myapp_test DBSERVER=127.0.0.1 HTTP_URL=http://localhost:8085/ HTTPS_URL=http://localhost:8085/ ADMIN_DIR=manager/
     matrix:
         - DB=mysql USER=root DBPASS=' ' DBUSER=root DBPORT=3306
         - DB=pgsql USER=postgres DBPASS=password DBUSER=postgres DBPORT=5432
@@ -71,6 +71,7 @@ before_script:
   - composer self-update || true
   - composer install --dev --no-interaction -o --apcu-autoloader
   - sh ./eccube_install.sh $DB
+  - mv html/admin html/manager
   - cat ./data/config/config.php
   - if [[ $DIST = 'trusty' ]]; then export DISPLAY=:99.0 ; fi
   - if [[ $DIST = 'trusty' ]]; then sh -e /etc/init.d/xvfb start ; fi
