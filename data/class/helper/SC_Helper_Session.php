@@ -215,7 +215,7 @@ class SC_Helper_Session
         }
 
         if ($is_unset || $ret === false) {
-            SC_Helper_Session_Ex::destroyToken();
+            // SC_Helper_Session_Ex::destroyToken();
         }
 
         return $ret;
