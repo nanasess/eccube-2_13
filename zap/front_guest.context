@@ -5,10 +5,7 @@
         <desc/>
         <inscope>true</inscope>
         <incregexes>\Qhttps://ec-cube\E.*</incregexes>
-        <excregexes>\Qhttps://ec-cube/_wdt\E.*</excregexes>
-        <excregexes>\Qhttps://ec-cube/_profile\E.*</excregexes>
         <excregexes>\Qhttps://ec-cube/admin\E.*</excregexes>
-        <excregexes>\Qhttps://ec-cube/html\E.*</excregexes>
         <tech>
             <include>Db.MySQL</include>
             <include>Db.PostgreSQL</include>

@@ -5,10 +5,7 @@
         <desc/>
         <inscope>true</inscope>
         <incregexes>\Qhttps://ec-cube\E.*</incregexes>
-        <excregexes>\Qhttps://ec-cube/_wdt\E.*</excregexes>
-        <excregexes>\Qhttps://ec-cube/_profile\E.*</excregexes>
         <excregexes>\Qhttps://ec-cube/admin\E.*</excregexes>
-        <excregexes>\Qhttps://ec-cube/html\E.*</excregexes>
         <tech>
             <include>Db.MySQL</include>
             <include>Db.PostgreSQL</include>
@@ -56,11 +53,11 @@
         </postparser>
         <authentication>
             <type>2</type>
-            <loggedout>\Q&lt;span class="ec-headerNav__itemLink"&gt;ログイン&lt;/span&gt;\E</loggedout>
+            <loggedout>\Qalt="ログイン"\E</loggedout>
             <form>
-                <loginurl>https://ec-cube/mypage/login</loginurl>
-                <loginbody>login_email={%username%}&amp;login_pass={%password%}&amp;_csrf_token=xxx</loginbody>
-                <loginpageurl>https://ec-cube/mypage/login</loginpageurl>
+                <loginurl>https://ec-cube/frontparts/login_check.php</loginurl>
+                <loginbody>login_email={%username%}&amp;login_pass={%password%}&amp;transactionid=xxx&amp;mode=login&amp;url=/mypage/login.php</loginbody>
+                <loginpageurl>https://ec-cube/mypage/</loginpageurl>
             </form>
         </authentication>
         <users>
