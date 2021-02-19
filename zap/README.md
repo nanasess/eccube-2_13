@@ -23,7 +23,7 @@
     ## ダミーデータを生成
     docker-compose -f docker-compose.yml -f docker-compose.mysql.yml -f docker-compose.dev.yml -f docker-compose.owaspzap.yml exec ec-cube php ctests/acceptance/_bootstrap.php
     ## メールアドレスを zap_user@example.com に変更
-    docker-compose -f docker-compose.yml -f docker-compose.mysql.yml -f docker-compose.dev.yml -f docker-compose.owaspzap.yml exec mysql mysql --user=eccube_db_user --password=password eccube_db -e "UPDATE dtb_customer SET email = 'zap_user@example.com' WHERE customer_id = (SELECT customer_id FROM (SELECT MAX(customer_id) FROM dtb_customer) AS A);"
+    docker-compose -f docker-compose.yml -f docker-compose.mysql.yml -f docker-compose.dev.yml -f docker-compose.owaspzap.yml exec mysql mysql --user=eccube_db_user --password=password eccube_db -e "UPDATE dtb_customer SET email = 'zap_user@example.com' WHERE customer_id = (SELECT customer_id FROM (SELECT MAX(customer_id) FROM dtb_customer WHERE status = 2 AND del_flg = 0) AS A);"
 
     # PostgreSQL を使用する例
     ## require-dev のパッケージをインストールしておく
@@ -31,7 +31,7 @@
     ## ダミーデータを生成
     docker-compose -f docker-compose.yml -f docker-compose.pgsql.yml -f docker-compose.dev.yml -f docker-compose.owaspzap.yml exec ec-cube php ctests/acceptance/_bootstrap.php
     ## メールアドレスを zap_user@example.com に変更
-    docker-compose -f docker-compose.yml -f docker-compose.pgsql.yml -f docker-compose.dev.yml -f docker-compose.owaspzap.yml exec postgres psql --user=eccube_db_user eccube_db -c "UPDATE dtb_customer SET email = 'zap_user@example.com' WHERE customer_id = (SELECT MAX(customer_id) FROM dtb_customer);"
+    docker-compose -f docker-compose.yml -f docker-compose.pgsql.yml -f docker-compose.dev.yml -f docker-compose.owaspzap.yml exec postgres psql --user=eccube_db_user eccube_db -c "UPDATE dtb_customer SET email = 'zap_user@example.com' WHERE customer_id = (SELECT MAX(customer_id) FROM dtb_customer WHERE status = 2 AND del_flg = 0);"
     ```
 1. OWASP ZAP を起動します。Firefox 以外のブラウザで `http://localhost:8081/zap/` へアクセスすると、OWASP ZAP の管理画面が表示されます
 1. Firefox を起動し、設定→ネットワーク設定→接続設定からプロキシーの設定をします
