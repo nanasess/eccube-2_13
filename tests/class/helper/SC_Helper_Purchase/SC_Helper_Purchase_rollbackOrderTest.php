@@ -127,7 +127,7 @@ class SC_Helper_Purchase_rollbackOrderMock extends SC_Helper_Purchase
 {
   public $testResult = array();
 
-  function cancelOrder($order_id, $orderStatus = ORDER_CANCEL, $is_delete = false)
+  public static function cancelOrder($order_id, $orderStatus = ORDER_CANCEL, $is_delete = false)
   {
     $this->testResult['cancelOrder'] = array(
       'order_id' => $order_id,
@@ -136,7 +136,7 @@ class SC_Helper_Purchase_rollbackOrderMock extends SC_Helper_Purchase
     );
   }
 
-  public function getOrderTempByOrderId($order_id)
+  public static function getOrderTempByOrderId($order_id)
   {
     $this->testResult['getOrderTempByOrderId'] = array(
       'order_id' => $order_id
@@ -146,7 +146,7 @@ class SC_Helper_Purchase_rollbackOrderMock extends SC_Helper_Purchase
     );
   }
 
-  function saveOrderTemp($uniqid, $arrOrderTemp, &$objCustomer = null)
+  public static function saveOrderTemp($uniqid, $arrOrderTemp, &$objCustomer = null)
   {
     $this->testResult['saveOrderTemp'] = array(
       'uniqid' => $uniqid,
@@ -154,7 +154,7 @@ class SC_Helper_Purchase_rollbackOrderMock extends SC_Helper_Purchase
     );
   }
 
-  function verifyChangeCart($uniqid, &$objCartSession)
+  public static function verifyChangeCart($uniqid, &$objCartSession)
   {
     $this->testResult['verifyChangeCart'] = array(
       'uniqid' => $uniqid
