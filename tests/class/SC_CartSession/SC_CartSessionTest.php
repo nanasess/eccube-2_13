@@ -176,6 +176,12 @@ class SC_CartSessionTest extends Common_TestCase
 
     public function testGetAllProductsTotal()
     {
+        $objQuery = SC_Query_Ex::getSingletonInstance();
+        $TaxRules = $objQuery->select('*', 'dtb_tax_rule');
+        foreach ($TaxRules as $TaxRule) {
+            var_dump($TaxRule);
+        }
+        var_dump(date('Y-m-d H:i:s'));
         $this->objCartSession->addProduct(2, 1);
         $this->objCartSession->addProduct(3, 1);
 
