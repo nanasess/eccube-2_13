@@ -54,6 +54,8 @@ jobs:
         HTTPS_URL: http://localhost:8085/
       run: |
         ./eccube_install.sh ${DB}
-
+    - name: Debug
+      if: ${{ always() }}
+      uses: mxschmitt/action-tmate@v3
     - name: PHPStan
       run: data/vendor/bin/phpstan analyze data/ --error-format=github
